@@ -5,14 +5,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import com.b409.nameServer.serviceImpl.baseOperation;
+import com.b409.nameServer.serviceImpl.baseOperationImpl;
 
 
 
 public class Test {
 
 	public static void main(String[] args) throws URISyntaxException {
-		baseOperation operation = new baseOperation();
+		baseOperationImpl operation = new baseOperationImpl();
 		//URI uri = operation.startTransaction("create (n) return n");
 		operation.beginAndCommitTransaction("create (n) return id(n)");
 	

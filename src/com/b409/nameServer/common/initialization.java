@@ -3,12 +3,12 @@ package com.b409.nameServer.common;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import com.b409.nameServer.serviceImpl.baseOperation;
+import com.b409.nameServer.serviceImpl.baseOperationImpl;
 
 public class initialization {
 	public static void ini() throws URISyntaxException
 	{
-		baseOperation operation = new baseOperation();
+		baseOperationImpl operation = new baseOperationImpl();
 
 		//数据库是否正常运行
 		System.out.println("DatabaseIsRunning: "+operation.databaseIsRunning());

@@ -7,7 +7,7 @@ import java.util.List;
 public interface IbaseOperation {
 
 	// 基本常量
-	public static final String SERVER_ROOT_URI = "http://192.168.0.187:7474/db/data/";
+	//public static final String SERVER_ROOT_URI = "http://192.168.0.187:7474/db/data/";
 
 	// 测试数据库是否正常运行（get）
 	public boolean databaseIsRunning();

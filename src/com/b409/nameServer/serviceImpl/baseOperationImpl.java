@@ -13,13 +13,14 @@ import net.sf.json.JSONObject;
 import org.neo4j.example.helloworld.Relationship;
 import org.neo4j.example.helloworld.TraversalDescription;
 
+import com.b409.nameServer.common.config;
 import com.b409.nameServer.common.generateJson;
 import com.b409.nameServer.service.IbaseOperation;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class baseOperation implements IbaseOperation {
+public class baseOperationImpl implements IbaseOperation,config {
 
 	// 测试数据库是否正常运行（get）
 	public boolean databaseIsRunning() {
