@@ -1,4 +1,4 @@
-package com.b409.nameServer.test;
+package com.b409.nameServer.common;
 
 import java.net.URI;
 import java.net.URISyntaxException;
