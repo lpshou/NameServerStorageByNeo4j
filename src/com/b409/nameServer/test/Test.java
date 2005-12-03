@@ -15,6 +15,7 @@ public class Test {
 		baseOperation operation = new baseOperation();
 		URI uri = operation.startTransaction("create (n) return n");
 		URI uri2 = operation.executeTransaction(uri, "create (n : liupeng { name : \"liupeng\" }) return n");
+		//测试
 		operation.commitTransaction(uri2,"");
 		
 		//initialization.ini();
