@@ -6,16 +6,19 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import com.b409.nameServer.serviceImpl.baseOperationImpl;
+import com.b409.nameServer.serviceImpl.operationForRelationshipImpl;
 
 
 
 public class Test {
 
 	public static void main(String[] args) throws URISyntaxException {
+//		System.out.println("hah");
 		baseOperationImpl operation = new baseOperationImpl();
-		//URI uri = operation.startTransaction("create (n) return n");
-		operation.beginAndCommitTransaction("create (n) return id(n)");
-	
+
+//		operation.beginAndCommitTransaction("create (n) return id(n)");
+		operationForRelationshipImpl relationship = new operationForRelationshipImpl();
+		relationship.getRelationshipTypeBetweenTwoNode("liupeng", "huangshaojian");
 		
 		//initialization.ini();
 		

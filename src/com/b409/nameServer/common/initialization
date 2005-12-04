@@ -1,4 +1,4 @@
-CREATE (b409:group{name:'B409',type:'group'})
+ CREATE (b409:group{name:'B409',type:'group'})
 CREATE (liupeng:user{name:'liupeng',type:'user'})
 CREATE (huang:user{name:'huang',type:'user'})
 CREATE (zhang:user{name:'zhang',type:'user'})
