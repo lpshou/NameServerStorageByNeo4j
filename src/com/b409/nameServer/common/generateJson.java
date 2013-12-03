@@ -1,9 +1,9 @@
-package com.b409.nameServer.serviceImpl;
+package com.b409.nameServer.common;
 
 import java.net.URI;
 
 public class generateJson {
-	static String generateJsonTransaction(String transactionUri) {
+	public static String generateJsonTransaction(String transactionUri) {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("{ \"statements\" : [{");
@@ -14,7 +14,7 @@ public class generateJson {
 		return sb.toString();
 	}
 
-	static String generateJsonRelationship(URI endNode,
+	public static String generateJsonRelationship(URI endNode,
 			String relationshipType, String... jsonAttributes) {
 
 		StringBuilder sb = new StringBuilder();
