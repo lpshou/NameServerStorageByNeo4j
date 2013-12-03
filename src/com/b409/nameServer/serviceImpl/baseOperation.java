@@ -79,7 +79,7 @@ public class baseOperation implements IbaseOperation {
 			throws URISyntaxException {
 
 		URI fromUri = new URI(startNode.toString() + "/relationships");
-		String relationshipJson = generateJsonRelationship(endNode,
+		String relationshipJson = generateJson.generateJsonRelationship(endNode,
 				relationshipType, jsonAttributes);
 
 		WebResource resource = Client.create().resource(fromUri);
@@ -98,31 +98,6 @@ public class baseOperation implements IbaseOperation {
 		return location;
 	}
 
-	public String generateJsonRelationship(URI endNode,
-			String relationshipType, String... jsonAttributes) {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("{ \"to\" : \"");
-		sb.append(endNode.toString());
-		sb.append("\", ");
-
-		sb.append("\"type\" : \"");
-		sb.append(relationshipType);
-		if (jsonAttributes == null || jsonAttributes.length < 1) {
-			sb.append("\"");
-		} else {
-			sb.append("\", \"data\" : ");
-			for (int i = 0; i < jsonAttributes.length; i++) {
-				sb.append(jsonAttributes[i]);
-				if (i < jsonAttributes.length - 1) { // Miss off the final comma
-					sb.append(", ");
-				}
-			}
-		}
-
-		sb.append(" }");
-		return sb.toString();
-	}
 
 	// 给一个关系添加属性（put）
 	public void addPropertyToRelationship(URI relationshipUri, String name,
@@ -145,7 +120,6 @@ public class baseOperation implements IbaseOperation {
 
 	}
 
-	// TODO
 	// 查询（post）
 	public List<URI> findNodeWithRelationshipInDepth(URI startNode,
 			String relationship, int depth, String direction)
@@ -201,71 +175,27 @@ public class baseOperation implements IbaseOperation {
 		}
 
 	}
-	public URI startTransaction(String cypherString){
-		final String transactionUri = SERVER_ROOT_URI + "transaction";
 
-
-				WebResource resource = Client.create().resource(transactionUri);
-
-				String transactionJson = generateJson.generateJsonTransaction(cypherString);
-				System.out.println(transactionJson);
-				// POST {} to the node entry point URI
-				ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
-						.type(MediaType.APPLICATION_JSON).entity(transactionJson)
-						.post(ClientResponse.class);
-
-				final URI location = response.getLocation();
-				System.out.println(String.format(
-						"POST to [%s],   location header [%s]", transactionUri,
-						location.toString()));
-				response.close();
-
-		
-		return location;
-	}
-	
-	//执行一个事务
-	public URI executeTransaction(URI transactionUri,String cypherString) throws URISyntaxException {
-//
-				WebResource resource = Client.create().resource(transactionUri);
-				String transactionJson = generateJson.generateJsonTransaction(cypherString);
-				System.out.println(transactionJson);
-
-
-				ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
-						.type(MediaType.APPLICATION_JSON)
-						.entity(transactionJson).post(ClientResponse.class);
-
-				System.out.println(String.format("Post to [%s], status code [%d]",
-						transactionUri, response.getStatus()));
-				String str = response.getEntity(String.class);
-				JSONObject jsonObject = JSONObject.fromObject(str);
-				String strTemp = jsonObject.getString("commit");
-				System.out.println(strTemp);
-				response.close();
-				
-				return new URI(strTemp);
-	}
-	
-	//提交一个事务，可以执行cypher
-	public void commitTransaction(URI transactionUri,String cypherString){
+	//提交一个事务并执行其中cypher
+	public void beginAndCommitTransaction(String cypherString)
+			throws URISyntaxException {
+		final String transactionUri = SERVER_ROOT_URI + "transaction/commit";
 		
 		WebResource resource = Client.create().resource(transactionUri);
-		String transactionJson = generateJson.generateJsonTransaction(cypherString);
+		String transactionJson = generateJson
+				.generateJsonTransaction(cypherString);
 		System.out.println(transactionJson);
-
-
+		// POST {} to the node entry point URI
 		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
 				.type(MediaType.APPLICATION_JSON)
-				.entity(transactionJson).post(ClientResponse.class);
+				.entity(transactionJson)
+				.post(ClientResponse.class);
 
-		System.out.println(String.format("Post to [%s], status code [%d]",
-				transactionUri, response.getStatus()));
-		
+		String strTemp = response.getEntity(String.class);
+		System.out.println(String.format(
+				"POST to [%s],   result [%s]", transactionUri,
+				strTemp));
 		response.close();
-		
 	}
-
-
 
 }

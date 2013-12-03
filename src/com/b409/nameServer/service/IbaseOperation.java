@@ -24,8 +24,6 @@ public interface IbaseOperation {
 			String relationshipType, String jsonAttributes)
 			throws URISyntaxException;
 
-	public String generateJsonRelationship(URI endNode,
-			String relationshipType, String... jsonAttributes);
 
 	// 给一个关系添加属性（put）
 	public void addPropertyToRelationship(URI relationshipUri, String name,
@@ -53,13 +51,8 @@ public interface IbaseOperation {
 	public List<URI> findNodeWithRelationshipInDepth(URI startNode,
 			String relationship, int depth, String direction)
 			throws URISyntaxException;
-
-	//开始一个transaction事务,可以执行cypher
-	public URI startTransaction(String cypherString);
 	
-	//在一个开始的事务中继续执行cypher
-	public URI executeTransaction(URI transactionUri,String cypherString)throws URISyntaxException;
+	//提交一个事务并执行其中cypher
+	public void beginAndCommitTransaction(String cypherString)throws URISyntaxException;
 	
-	//提交一个事务，可以执行cypher
-	public void commitTransaction(URI transactionUri,String cypherString);
 }

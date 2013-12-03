@@ -13,10 +13,9 @@ public class Test {
 
 	public static void main(String[] args) throws URISyntaxException {
 		baseOperation operation = new baseOperation();
-		URI uri = operation.startTransaction("create (n) return n");
-		URI uri2 = operation.executeTransaction(uri, "create (n : liupeng { name : \"liupeng\" }) return n");
-		//测试
-		operation.commitTransaction(uri2,"");
+		//URI uri = operation.startTransaction("create (n) return n");
+		operation.beginAndCommitTransaction("create (n) return id(n)");
+	
 		
 		//initialization.ini();
 		
