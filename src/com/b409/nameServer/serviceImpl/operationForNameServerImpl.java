@@ -61,5 +61,46 @@ public class operationForNameServerImpl implements IOperationForNameServer,confi
 		int nodeId = commonTool.getNodeIdFromNodeUri(nodeUri);
 		setAllPropertiesOnNode(nodeId, props);
 	}
+	
+	//获取节点信息（包括属性、id、uri等等）
+	public String getMessageOfNode(int nodeId){
+		final String uri = SERVER_ROOT_URI + "cypher";
+		String jsonString=generateJson.generateJsonForGetNodeProperties(nodeId);
+		System.out.println(jsonString);
+		String data = jerseyClient.sendToServer(uri, jsonString, "post");
+		
+		System.out.println(data);
+		return data;
+	}
+	
+	//获取节点属性
+	public String getPropertieOfNode(int nodeId){
+		String dataString = getMessageOfNode(nodeId);
+		JSONObject jsonObject = JSONObject.fromObject(dataString);
+		String data = jsonObject.getString("data");
+		JSONArray array = JSONArray.fromObject(data);
+		String data1 = array.getString(0);
+		JSONArray array2 = JSONArray.fromObject(data1);
+		String data2 = array2.getString(0);
+		JSONObject jsonObject2 = JSONObject.fromObject(data2);
+		String result = jsonObject2.getString("data");
+		System.out.println(result);		
+		return result;
+		
+	}
+	//获取节点URI
+	public String getUriOfNode(int nodeId){
+		String dataString = getMessageOfNode(nodeId);
+		JSONObject jsonObject = JSONObject.fromObject(dataString);
+		String data = jsonObject.getString("data");
+		JSONArray array = JSONArray.fromObject(data);
+		String data1 = array.getString(0);
+		JSONArray array2 = JSONArray.fromObject(data1);
+		String data2 = array2.getString(0);
+		JSONObject jsonObject2 = JSONObject.fromObject(data2);
+		String result = jsonObject2.getString("self");
+		System.out.println(result);		
+		return result;
+	}
 
 }

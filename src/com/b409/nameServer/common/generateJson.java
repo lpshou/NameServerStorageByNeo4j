@@ -3,6 +3,19 @@ package com.b409.nameServer.common;
 import java.net.URI;
 
 public class generateJson {
+	//获取节点属性的json串
+	public static String generateJsonForGetNodeProperties(int id){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{ \"query\" :\"");
+		sb.append("start n = node( {id} ) return n\", ");
+		sb.append("\"params\" : {");
+		sb.append("\"id\" : ");
+		sb.append(id);
+		sb.append("}}");
+		
+		return sb.toString();	
+	}
+	
 	public static String jenerateJsonForSetProperties(int id, String props){
 		StringBuilder sb = new StringBuilder();
 		sb.append("{ \"query\" :\"");
