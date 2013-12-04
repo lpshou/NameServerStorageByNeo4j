@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.b409.nameServer.common.config;
 import com.b409.nameServer.common.generateJson;
 import com.b409.nameServer.service.IOperationForRelationship;
@@ -17,7 +20,6 @@ public class operationForRelationshipImpl implements IOperationForRelationship,
 		config {
 	public List<String> getRelationshipTypeBetweenTwoNode(String nameNode1,
 			String nameNode2) {
-		List<String> strList = new ArrayList<String>();
 
 		final String cypherUri = SERVER_ROOT_URI + "cypher";
 
@@ -40,6 +42,16 @@ public class operationForRelationshipImpl implements IOperationForRelationship,
 		System.out.println(String.format(
 				"POST to [%s], status code [%d]",
 				cypherUri, response.getStatus()));
+		String strResult = response.getEntity(String.class);
+		System.out.println(strResult);
+		JSONObject jsonObject = JSONObject.fromObject(strResult);
+		JSONArray array = JSONArray.fromObject(jsonObject.get("data"));
+		List<String> strList = new ArrayList<String>();
+
+		for(int i=0;i<array.size();i++){
+			String strTemp = array.getString(i);
+			strList.add(strTemp);
+		}
 
 		response.close();
 		return strList;

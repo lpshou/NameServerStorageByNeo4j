@@ -3,6 +3,33 @@ package com.b409.nameServer.common;
 import java.net.URI;
 
 public class generateJson {
+	public static String jenerateJsonForCreateNodeWithProperties(String type,String props){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{ \"query\" :\"");
+		switch (type.toUpperCase()) {
+		case "GROUP":{
+			sb.append("CREATE (n:Group { props } ) RETURN n\", ");
+			break;
+		}
+		case "USER":{
+			sb.append("CREATE (n:User { props } ) RETURN n\", ");
+			break;
+		}
+		case "DIRECTORY":{
+			sb.append("CREATE (n:Directory { props } ) RETURN n\", ");
+			break;
+		}
+		case "FILE":{
+			sb.append("CREATE (n:File { props } ) RETURN n\", ");
+			break;
+		}
+		}
+		sb.append("\"params\" : {");
+		sb.append("\"props\" : ");
+		sb.append(props);
+		sb.append("}}");
+		return sb.toString();		
+	}
 	
 	public static String generateJsonCypher(String cypherString,String nameNode1,String nameNode2){
 		StringBuilder sb = new StringBuilder();

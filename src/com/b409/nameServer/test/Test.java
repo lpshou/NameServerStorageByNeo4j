@@ -17,8 +17,12 @@ public class Test {
 		baseOperationImpl operation = new baseOperationImpl();
 
 //		operation.beginAndCommitTransaction("create (n) return id(n)");
-		operationForRelationshipImpl relationship = new operationForRelationshipImpl();
-		relationship.getRelationshipTypeBetweenTwoNode("liupeng", "huangshaojian");
+//		operationForRelationshipImpl relationship = new operationForRelationshipImpl();
+//		List<String>strings =  relationship.getRelationshipTypeBetweenTwoNode("liupeng", "huangshaojian");
+		
+		
+
+		
 		
 		//initialization.ini();
 		
