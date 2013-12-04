@@ -28,16 +28,24 @@ public class JerseyClient {
 		case "post": {
 			response = resource
 					.accept(MediaType.APPLICATION_JSON)
-					.type(MediaType.APPLICATION_JSON).entity(jsonString)
+					.type(MediaType.APPLICATION_JSON)
+					.entity(jsonString)
 					.post(ClientResponse.class);
 			status = response.getStatus();
+			String reminderString ="";
+			switch(status){
+			case 201:reminderString="创建成功";break;
+			case 200:reminderString="sucess!";break;
+			
+			}
+			System.out.println(reminderString);
 			dataString = response.getEntity(String.class);
 			break;
 		}
 		case "get": {
 			response = resource
 					.accept(MediaType.APPLICATION_JSON)
-					.type(MediaType.APPLICATION_JSON).entity(jsonString)
+					.type(MediaType.APPLICATION_JSON)
 					.get(ClientResponse.class);
 			status = response.getStatus();
 			dataString = response.getEntity(String.class);
@@ -46,7 +54,8 @@ public class JerseyClient {
 		case "put": {
 			response = resource
 					.accept(MediaType.APPLICATION_JSON)
-					.type(MediaType.APPLICATION_JSON).entity(jsonString)
+					.type(MediaType.APPLICATION_JSON)
+					.entity(jsonString)
 					.put(ClientResponse.class);
 			status = response.getStatus();
 			dataString = response.getEntity(String.class);
@@ -64,6 +73,7 @@ public class JerseyClient {
 			case 409:reminderString="节点有关系存在，请先删除关系";break;
 			}
 			System.out.println(reminderString);
+			break;
 
 		}
 		}
