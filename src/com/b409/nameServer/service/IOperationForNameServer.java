@@ -9,7 +9,7 @@ public interface IOperationForNameServer {
 	
 	//props为json串
 	public void setAllPropertiesOnNode(int nodeId, String props);
-	public void setAllPropertiesOnNode(String nodeId, String props);
+	public void setAllPropertiesOnNode(String nodeUri, String props);
 
 	
 

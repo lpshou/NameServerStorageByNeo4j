@@ -7,6 +7,7 @@ import java.util.List;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.b409.nameServer.common.commonTool;
 import com.b409.nameServer.common.config;
 import com.b409.nameServer.common.generateJson;
 import com.b409.nameServer.common.jerseyClient;
@@ -56,8 +57,9 @@ public class operationForNameServerImpl implements IOperationForNameServer,confi
 		String data = jerseyClient.sendToServer(uri, jsonString, "post");
 		System.out.println(data);
 	}
-	public void setAllPropertiesOnNode(String nodeId, String props){
-		
+	public void setAllPropertiesOnNode(String nodeUri, String props){
+		int nodeId = commonTool.getNodeIdFromNodeUri(nodeUri);
+		setAllPropertiesOnNode(nodeId, props);
 	}
 
 }
