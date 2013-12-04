@@ -21,22 +21,25 @@ public class operationForRelationshipImpl implements IOperationForRelationship,
 
 		final String cypherUri = SERVER_ROOT_URI + "cypher";
 
-		String cypherString = "match (n:user) where n.name={name1} match n-[r]-friend where friend.name={name2} return type[r]";
+		String cypherString = "match (n:user) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
 
+		System.out.println(cypherString);
 		String cypherJson = generateJson.generateJsonCypher(cypherString,
 				nameNode1, nameNode2);
+		System.out.println(cypherJson);
 
 		WebResource resource = Client.create().resource(cypherUri);
 
 		// POST JSON to the relationships URI
 		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
-				.type(MediaType.APPLICATION_JSON).entity(cypherJson)
+				.type(MediaType.APPLICATION_JSON)
+				.entity(cypherJson)
 				.post(ClientResponse.class);
 
-		final URI location = response.getLocation();
+		//final URI location = response.getLocation();
 		System.out.println(String.format(
-				"POST to [%s], status code [%d], location header [%s]",
-				cypherUri, response.getStatus(), location.toString()));
+				"POST to [%s], status code [%d]",
+				cypherUri, response.getStatus()));
 
 		response.close();
 		return strList;

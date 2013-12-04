@@ -6,11 +6,11 @@ public class generateJson {
 	
 	public static String generateJsonCypher(String cypherString,String nameNode1,String nameNode2){
 		StringBuilder sb = new StringBuilder();
-		sb.append("{ \"query\" : \");");
+		sb.append("{ \"query\" : \"");
 		sb.append(cypherString);
-		sb.append("\", \"params\" : { \"name1\" : \" );");
+		sb.append("\", \"params\" : { \"name1\" : \"");
 		sb.append(nameNode1);
-		sb.append("\", \"name2\" : \");");
+		sb.append("\", \"name2\" : \"");
 		sb.append("\" } }");
 		return sb.toString();
 	}
