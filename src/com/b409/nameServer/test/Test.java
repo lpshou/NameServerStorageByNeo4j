@@ -36,8 +36,8 @@ public class Test {
 //		//为节点添加属性
 //		operation.addPropertyToNode(node, "school", "华科");
 		
-//		URI node2 = operation.createNode();
-//		operation.addPropertyToNode(node2, "lab.", "b409");
+		URI node2 = operation.createNode();
+		operation.addPropertyToNode(node2, "lab.", "b409");
 		
 //		String nodeUriStart = "http://192.168.0.187:7474/db/data/node/0";
 //		URI startNode1 = new URI(nodeUriStart);

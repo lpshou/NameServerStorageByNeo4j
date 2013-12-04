@@ -15,12 +15,14 @@ public class RelationshipTest {
 //		//String relationshipData="{}";
 //		relationshipImpl.createRelationshipBetweenTwoNode(nodeUri1, nodeUri2, relationshipType, relationshipData);
 //	
-		List<String>labels = new ArrayList<String>();
-		labels.add("home");
-		labels.add("Friend");
-		
-		relationshipImpl.getRelationshipOfNode(nodeUri2, "out", labels);
-	
+//		List<String>labels = new ArrayList<String>();
+//		labels.add("home");
+//		labels.add("Friend");
+//		
+//		relationshipImpl.getRelationshipOfNode(nodeUri2, "out", labels);
+
+		//relationshipImpl.getAllRelationships();
+//		relationshipImpl.
 	
 	
 	

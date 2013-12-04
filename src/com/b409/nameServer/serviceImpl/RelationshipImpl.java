@@ -18,15 +18,35 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class RelationshipImpl implements IForRelationship, Config {
+	//获得图中所有关系
+	public List<String> getAllRelationships(){
+		String cypherUri = SERVER_ROOT_URI + "relationship/types";
+		String data = JerseyClient.sendToServer(cypherUri, "{}", "get");
+		JSONArray jsonArray = JSONArray.fromObject(data);
+		List<String>resultList = new ArrayList<>();
+		for(int i=0;i<jsonArray.size();i++)
+			resultList.add(jsonArray.get(i).toString());
+		
+		return resultList;
+//		
+//		for(int j=0;j<resultList.size();j++)
+//			System.out.println(resultList.get(j));
+//			
+//		System.out.println(data);
+		
+	}
+	
 	// 在两个节点之间建立关系，
 	public void createRelationshipBetweenTwoNode(String nodeUri1,
 			String nodeUri2, String relationshipType, String relationshipData){
+		
 		String cypherUri = nodeUri1+"/relationships";
 		String cypherJson = GenerateJson.generateJsonForCreateRelationshipBetweenTwoNodes(nodeUri2, relationshipType, relationshipData);
 		JerseyClient.sendToServer(cypherUri, cypherJson, "post");
 	}
 	public void createRelationshipBetweenTwoNode(int nodeId1,int nodeId2, 
 			String relationshipType, String relationshipData){
+		
 		String nodeUri1 = SERVER_ROOT_URI+"node/"+nodeId1;
 		String nodeUri2 = SERVER_ROOT_URI+"node/"+nodeId2;
 		createRelationshipBetweenTwoNode(nodeUri1, nodeUri2, relationshipType, relationshipData);

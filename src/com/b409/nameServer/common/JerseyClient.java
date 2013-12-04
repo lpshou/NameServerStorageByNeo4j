@@ -55,10 +55,10 @@ public class JerseyClient {
 			response = resource
 					.accept(MediaType.APPLICATION_JSON)
 					.type(MediaType.APPLICATION_JSON)
-					.entity(jsonString)
+					.entity("\""+jsonString+"\"")
 					.put(ClientResponse.class);
 			status = response.getStatus();
-			dataString = response.getEntity(String.class);
+			//dataString = response.getEntity(String.class);
 			break;
 		}
 		case "delete": {
