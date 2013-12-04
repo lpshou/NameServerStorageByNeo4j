@@ -3,6 +3,19 @@ package com.b409.nameServer.common;
 import java.net.URI;
 
 public class generateJson {
+	public static String jenerateJsonForSetProperties(int id, String props){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{ \"query\" :\"");
+		sb.append("start n=node( { id } ) set n= { props } return n \",");
+		sb.append("\"params\" : {");
+		sb.append("\"id\" : ");
+		sb.append(id);
+		sb.append(",");
+		sb.append("\"props\" : ");
+		sb.append(props);
+		sb.append("}}");
+		return sb.toString();	
+	}
 	public static String jenerateJsonForCreateNodeWithProperties(String type,String props){
 		StringBuilder sb = new StringBuilder();
 		sb.append("{ \"query\" :\"");

@@ -46,7 +46,18 @@ public class operationForNameServerImpl implements IOperationForNameServer,confi
 		for(int j=0;j<uris.size();j++)
 			System.out.println(uris.get(j));
 		return uris;
-
+	}
+	
+	
+	public void setAllPropertiesOnNode(int nodeId, String props){
+		final String uri = SERVER_ROOT_URI + "cypher";
+		String jsonString=generateJson.jenerateJsonForSetProperties(nodeId, props);
+		System.out.println(jsonString);
+		String data = jerseyClient.sendToServer(uri, jsonString, "post");
+		System.out.println(data);
+	}
+	public void setAllPropertiesOnNode(String nodeId, String props){
+		
 	}
 
 }
