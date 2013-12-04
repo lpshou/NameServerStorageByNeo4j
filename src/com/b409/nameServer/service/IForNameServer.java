@@ -3,8 +3,8 @@ package com.b409.nameServer.service;
 import java.net.URI;
 import java.util.List;
 
-public interface IOperationForNameServer {
-	//创建一个节点，props为json串,返回值为创建的节点的uri
+public interface IForNameServer {
+	//创建一个节点，属性值props为json串eg：{"a":"b"},返回值为创建的节点的uri
 	public List<String> createNodeWithProperties(String label, String props);
 	
 	//获取节点信息（包括属性、id、uri等等）
@@ -17,6 +17,10 @@ public interface IOperationForNameServer {
 	//设置节点属性，props为json串
 	public void setAllPropertiesOnNode(int nodeId, String props);
 	public void setAllPropertiesOnNode(String nodeUri, String props);
+	
+	//删除一个节点
+	public void deleteNode(String nodeUri);
+	public void deleteNode(int nodeId);
 
 	
 

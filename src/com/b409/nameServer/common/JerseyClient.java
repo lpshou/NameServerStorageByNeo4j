@@ -8,7 +8,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class jerseyClient {
+public class JerseyClient {
 	/**
 	* @Description: client发送请求
 	* @param uri：请求目的地址
@@ -20,7 +20,7 @@ public class jerseyClient {
 			String typeString) {
 		WebResource resource = Client.create().resource(uri);
 		ClientResponse response;
-		int statusString = 0;
+		int status = 0;
 		String dataString = "";
 	
 		
@@ -30,7 +30,7 @@ public class jerseyClient {
 					.accept(MediaType.APPLICATION_JSON)
 					.type(MediaType.APPLICATION_JSON).entity(jsonString)
 					.post(ClientResponse.class);
-			statusString = response.getStatus();
+			status = response.getStatus();
 			dataString = response.getEntity(String.class);
 			break;
 		}
@@ -39,7 +39,7 @@ public class jerseyClient {
 					.accept(MediaType.APPLICATION_JSON)
 					.type(MediaType.APPLICATION_JSON).entity(jsonString)
 					.get(ClientResponse.class);
-			statusString = response.getStatus();
+			status = response.getStatus();
 			dataString = response.getEntity(String.class);
 			break;
 		}
@@ -48,24 +48,29 @@ public class jerseyClient {
 					.accept(MediaType.APPLICATION_JSON)
 					.type(MediaType.APPLICATION_JSON).entity(jsonString)
 					.put(ClientResponse.class);
-			statusString = response.getStatus();
+			status = response.getStatus();
 			dataString = response.getEntity(String.class);
 			break;
 		}
 		case "delete": {
 			response = resource
-					.accept(MediaType.APPLICATION_JSON)
-					.type(MediaType.APPLICATION_JSON).entity(jsonString)
+
 					.delete(ClientResponse.class);
-			statusString = response.getStatus();
-			dataString = response.getEntity(String.class);
-			break;
+			status = response.getStatus();
+			String reminderString="";
+			switch(status){
+			case 204:reminderString="删除成功！";break;
+			case 404:reminderString="要删除的节点不存在！";break;
+			case 409:reminderString="节点有关系存在，请先删除关系";break;
+			}
+			System.out.println(reminderString);
+
 		}
 		}
 		
 		System.out.println(String.format(
 				"Send to: [%s] \n status code: [%d]",
-				uri, statusString));
+				uri, status));
 		return dataString;
 
 	}

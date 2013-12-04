@@ -1,6 +1,6 @@
 package com.b409.nameServer.common;
 
-public class commonTool {
+public class CommonTool {
 	public static int getNodeIdFromNodeUri(String uri){
 		int i = uri.lastIndexOf("/");
 		String string = uri.substring(i+1);

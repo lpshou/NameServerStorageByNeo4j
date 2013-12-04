@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import com.b409.nameServer.serviceImpl.baseOperationImpl;
-import com.b409.nameServer.serviceImpl.operationForRelationshipImpl;
+import com.b409.nameServer.serviceImpl.RelationshipImpl;
 
 
 

@@ -13,14 +13,14 @@ import net.sf.json.JSONObject;
 import org.neo4j.example.helloworld.Relationship;
 import org.neo4j.example.helloworld.TraversalDescription;
 
-import com.b409.nameServer.common.config;
-import com.b409.nameServer.common.generateJson;
+import com.b409.nameServer.common.Config;
+import com.b409.nameServer.common.GenerateJson;
 import com.b409.nameServer.service.IbaseOperation;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class baseOperationImpl implements IbaseOperation,config {
+public class baseOperationImpl implements IbaseOperation,Config {
 
 	// 测试数据库是否正常运行（get）
 	public boolean databaseIsRunning() {
@@ -81,7 +81,7 @@ public class baseOperationImpl implements IbaseOperation,config {
 			throws URISyntaxException {
 
 		URI fromUri = new URI(startNode.toString() + "/relationships");
-		String relationshipJson = generateJson.generateJsonRelationship(endNode,
+		String relationshipJson = GenerateJson.generateJsonRelationship(endNode,
 				relationshipType, jsonAttributes);
 
 		WebResource resource = Client.create().resource(fromUri);
@@ -184,7 +184,7 @@ public class baseOperationImpl implements IbaseOperation,config {
 		final String transactionUri = SERVER_ROOT_URI + "transaction/commit";
 		
 		WebResource resource = Client.create().resource(transactionUri);
-		String transactionJson = generateJson
+		String transactionJson = GenerateJson
 				.generateJsonTransaction(cypherString);
 		System.out.println(transactionJson);
 		// POST {} to the node entry point URI

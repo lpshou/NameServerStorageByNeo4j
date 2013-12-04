@@ -9,15 +9,15 @@ import javax.ws.rs.core.MediaType;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import com.b409.nameServer.common.config;
-import com.b409.nameServer.common.generateJson;
-import com.b409.nameServer.service.IOperationForRelationship;
+import com.b409.nameServer.common.Config;
+import com.b409.nameServer.common.GenerateJson;
+import com.b409.nameServer.service.IForRelationship;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class operationForRelationshipImpl implements IOperationForRelationship,
-		config {
+public class RelationshipImpl implements IForRelationship,
+		Config {
 	public List<String> getRelationshipTypeBetweenTwoNode(String nameNode1,
 			String nameNode2) {
 
@@ -26,7 +26,7 @@ public class operationForRelationshipImpl implements IOperationForRelationship,
 		String cypherString = "match (n:user) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
 
 		System.out.println(cypherString);
-		String cypherJson = generateJson.generateJsonCypher(cypherString,
+		String cypherJson = GenerateJson.generateJsonCypher(cypherString,
 				nameNode1, nameNode2);
 		System.out.println(cypherJson);
 

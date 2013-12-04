@@ -2,7 +2,7 @@ package com.b409.nameServer.common;
 
 import java.net.URI;
 
-public class generateJson {
+public class GenerateJson {
 	//获取节点属性的json串
 	public static String generateJsonForGetNodeProperties(int id){
 		StringBuilder sb = new StringBuilder();

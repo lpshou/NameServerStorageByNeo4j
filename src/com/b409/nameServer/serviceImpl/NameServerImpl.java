@@ -7,25 +7,25 @@ import java.util.List;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import com.b409.nameServer.common.commonTool;
-import com.b409.nameServer.common.config;
-import com.b409.nameServer.common.generateJson;
-import com.b409.nameServer.common.jerseyClient;
-import com.b409.nameServer.service.IOperationForNameServer;
+import com.b409.nameServer.common.CommonTool;
+import com.b409.nameServer.common.Config;
+import com.b409.nameServer.common.GenerateJson;
+import com.b409.nameServer.common.JerseyClient;
+import com.b409.nameServer.service.IForNameServer;
 
-public class operationForNameServerImpl implements IOperationForNameServer,config {
+public class NameServerImpl implements IForNameServer,Config {
 	
 	public List<String> createNodeWithProperties(String label, String props){
 		final String uri = SERVER_ROOT_URI + "cypher";
 		String jsonString="";
 		switch(label.toUpperCase()){
-		case "GROUP":jsonString = generateJson.jenerateJsonForCreateNodeWithProperties("group",props);break;
-		case "USER":jsonString = generateJson.jenerateJsonForCreateNodeWithProperties("user",props);break;
-		case "DIRECTORY":jsonString = generateJson.jenerateJsonForCreateNodeWithProperties("directory",props);break;
-		case "FILE":jsonString = generateJson.jenerateJsonForCreateNodeWithProperties("file",props);break;
+		case "GROUP":jsonString = GenerateJson.jenerateJsonForCreateNodeWithProperties("group",props);break;
+		case "USER":jsonString = GenerateJson.jenerateJsonForCreateNodeWithProperties("user",props);break;
+		case "DIRECTORY":jsonString = GenerateJson.jenerateJsonForCreateNodeWithProperties("directory",props);break;
+		case "FILE":jsonString = GenerateJson.jenerateJsonForCreateNodeWithProperties("file",props);break;
 		}
 		
-		String data = jerseyClient.sendToServer(uri, jsonString, "post");
+		String data = JerseyClient.sendToServer(uri, jsonString, "post");
 		//System.out.println(data);
 		
 		//解析返回值，获得新创建的节点的URI
@@ -52,22 +52,22 @@ public class operationForNameServerImpl implements IOperationForNameServer,confi
 	
 	public void setAllPropertiesOnNode(int nodeId, String props){
 		final String uri = SERVER_ROOT_URI + "cypher";
-		String jsonString=generateJson.jenerateJsonForSetProperties(nodeId, props);
+		String jsonString=GenerateJson.jenerateJsonForSetProperties(nodeId, props);
 		System.out.println(jsonString);
-		String data = jerseyClient.sendToServer(uri, jsonString, "post");
+		String data = JerseyClient.sendToServer(uri, jsonString, "post");
 		System.out.println(data);
 	}
 	public void setAllPropertiesOnNode(String nodeUri, String props){
-		int nodeId = commonTool.getNodeIdFromNodeUri(nodeUri);
+		int nodeId = CommonTool.getNodeIdFromNodeUri(nodeUri);
 		setAllPropertiesOnNode(nodeId, props);
 	}
 	
 	//获取节点信息（包括属性、id、uri等等）
 	public String getMessageOfNode(int nodeId){
 		final String uri = SERVER_ROOT_URI + "cypher";
-		String jsonString=generateJson.generateJsonForGetNodeProperties(nodeId);
+		String jsonString=GenerateJson.generateJsonForGetNodeProperties(nodeId);
 		System.out.println(jsonString);
-		String data = jerseyClient.sendToServer(uri, jsonString, "post");
+		String data = JerseyClient.sendToServer(uri, jsonString, "post");
 		
 		System.out.println(data);
 		return data;
@@ -101,6 +101,18 @@ public class operationForNameServerImpl implements IOperationForNameServer,confi
 		String result = jsonObject2.getString("self");
 		System.out.println(result);		
 		return result;
+	}
+	
+	
+	//删除一个节点
+	public void deleteNode(String nodeUri){
+		String data = JerseyClient.sendToServer(nodeUri, "", "delete");	
+		System.out.println(data);
+	}
+	public void deleteNode(int nodeId){
+		String data = SERVER_ROOT_URI+"node/"+nodeId;
+		System.out.println("haha"+data);
+		deleteNode(data);
 	}
 
 }
