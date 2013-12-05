@@ -20,6 +20,24 @@ public interface IForNameServer {
 	* @return：
 	 */
 	public void deleteNode(int nodeId);
+	
+	/**
+	 * 
+	* @Description: 获取具有某个label的所有node
+	* @param label
+	* @return：
+	 */
+	public List<Integer> getAllNodesWithLabel(String label);
+	
+	/**
+	 * 
+	* @Description: 根据label和属性查找某个节点（只支持单属性查找）
+	* @param label
+	* @param propertyName：属性名
+	* @param propertyValue：属性值
+	* @return：
+	 */
+	public List<Integer> getNodeWithLabelAndProperty(String label, String propertyName,String propertyValue);
 	//--------------------------------------------------------------------------------
 	
 	
@@ -85,6 +103,54 @@ public interface IForNameServer {
 	//----------------------------------------------------------------------------------
 	
 
+	//节点label的相关操作
+	//--------------------------------------------------------------------------------
+	/**
+	 * 
+	* @Description: 给节点增加labels
+	* @param nodeId
+	* @param labels：要增加的labels,
+	* @return：
+	 */
+	public void addLabelsToNode(int nodeId,List<String>labels);
+	
+	/**
+	 * 
+	* @Description: 替换节点的labels(备注：首次成功，但是最后有问题，有待进一步处理......)
+	* 				（备注2：问题已经解决，是每次的response没有关闭的缘故）
+	* @param nodeId
+	* @param labels：替换为labels
+	* @return：
+	 */
+	public void replaceLabelsOnNode(int nodeId,List<String>labels);
+	
+	/**
+	 * 
+	* @Description: 删除节点上的某个label
+	* @param nodeId
+	* @param label：
+	* @return：
+	 */
+	public void removeOneLabelOnNode(int nodeId,String label);
+	
+	/**
+	 * 
+	* @Description: 列出一个节点的所有labels
+	* @param nodeId
+	* @return：
+	 */
+	public List<String> listAllLabelsOfNode(int nodeId);
+	
+	/**
+	 * 
+	* @Description: 列出图中所有的labels
+	* @return：
+	 */
+	public List<String> listAllLabelsInGraph();
+	
+	//--------------------------------------------------------------------------------
+	
+	
 	
 
 }

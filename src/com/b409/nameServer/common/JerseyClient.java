@@ -26,21 +26,36 @@ public class JerseyClient {
 		
 		switch (typeString) {
 		case "post": {
-			response = resource
-					.accept(MediaType.APPLICATION_JSON)
-					.type(MediaType.APPLICATION_JSON)
-					.entity(jsonString)
-					.post(ClientResponse.class);
+			boolean flag = false;
+			flag = jsonString.contains("{")||jsonString.contains("[");
+			System.out.println(flag);
+			if(flag){
+				response = resource
+						.accept(MediaType.APPLICATION_JSON)
+						.type(MediaType.APPLICATION_JSON)
+						.entity(jsonString)
+						.post(ClientResponse.class);
+			}else{
+				response = resource
+						.accept(MediaType.APPLICATION_JSON)
+						.type(MediaType.APPLICATION_JSON)
+						.entity("\"" + jsonString + "\"")
+						.post(ClientResponse.class);
+			}
 			status = response.getStatus();
 			String reminderString ="";
 			switch(status){
 			case 201:reminderString="创建成功";break;
-			case 200:reminderString="sucess!";break;
+			case 200:reminderString="成功";break;
+			case 204:reminderString="成功";break;
+			case 400:reminderString="失败";break;
 			
 			}
-			System.out.println(reminderString);
-			dataString = response.getEntity(String.class);
 			System.out.println(String.format("POST : [%s]  status code: [%d]",uri, status));
+			System.out.println(reminderString);
+			if(status != 204)
+				dataString = response.getEntity(String.class);
+			response.close();
 			break;
 		}
 		case "get": {
@@ -56,23 +71,36 @@ public class JerseyClient {
 			case 200:reminderString="成功获取";break;
 			}
 			System.out.println(reminderString);
+			response.close();
 			break;
 		}
 		case "put": {
-			response = resource
-					.accept(MediaType.APPLICATION_JSON)
-					.type(MediaType.APPLICATION_JSON)
-					.entity(jsonString)  //此处在RelationshipImpl中updateRelationship用到
-					.put(ClientResponse.class);
+			boolean flag = false;
+			flag = jsonString.contains("{")||jsonString.contains("[");
+			System.out.println(flag);
+			if(flag){
+				response = resource
+						.accept(MediaType.APPLICATION_JSON)
+						.type(MediaType.APPLICATION_JSON)
+						.entity(jsonString)  //此处在RelationshipImpl中updateRelationship用到
+						.put(ClientResponse.class);
+			}else{
+				response = resource
+						.accept(MediaType.APPLICATION_JSON)
+						.type(MediaType.APPLICATION_JSON)
+						.entity("\""+ jsonString+ "\"" ) 
+						.put(ClientResponse.class);
+			}
 			String reminderString="";
 			status = response.getStatus();
 			switch(status){
-			case 400:reminderString="失败，不存在！";break;
-			case 204:reminderString="成功更新";break;
+			case 400:reminderString="失败";break;
+			case 204:reminderString="成功";break;
 			}
 			System.out.println(String.format("PUT : [%s]  status code: [%d]",uri, status));
 			System.out.println(reminderString);
 			//dataString = response.getEntity(String.class);
+			response.close();
 			break;
 		}
 		case "delete": {
@@ -88,6 +116,7 @@ public class JerseyClient {
 			}
 			System.out.println(String.format("DELETE : [%s]  status code: [%d]",uri, status));
 			System.out.println(reminderString);
+			response.close();
 			break;
 		}
 		}
