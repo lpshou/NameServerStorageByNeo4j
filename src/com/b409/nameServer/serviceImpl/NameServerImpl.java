@@ -1,6 +1,5 @@
 package com.b409.nameServer.serviceImpl;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,10 +56,7 @@ public class NameServerImpl implements IForNameServer,Config {
 		String data = JerseyClient.sendToServer(uri, jsonString, "post");
 		System.out.println(data);
 	}
-	public void setAllPropertiesOnNode(String nodeUri, String props){
-		int nodeId = CommonTool.getNodeIdFromNodeUri(nodeUri);
-		setAllPropertiesOnNode(nodeId, props);
-	}
+
 	
 	//更新节点某个属性值,其他属性值不变
 	public void updateOnePropertyOnNode(String nodeUri,String key,String value){
@@ -109,31 +105,42 @@ public class NameServerImpl implements IForNameServer,Config {
 		return result;
 		
 	}
-	//获取节点URI
-	public String getUriOfNode(int nodeId){
-		String dataString = getMessageOfNode(nodeId);
-		JSONObject jsonObject = JSONObject.fromObject(dataString);
-		String data = jsonObject.getString("data");
-		JSONArray array = JSONArray.fromObject(data);
-		String data1 = array.getString(0);
-		JSONArray array2 = JSONArray.fromObject(data1);
-		String data2 = array2.getString(0);
-		JSONObject jsonObject2 = JSONObject.fromObject(data2);
-		String result = jsonObject2.getString("self");
-		System.out.println(result);		
-		return result;
-	}
+
 	
 	
 	//删除一个节点
-	public void deleteNode(String nodeUri){
+	public void deleteNode(int nodeId){
+		String nodeUri = SERVER_ROOT_URI+"node/"+nodeId;
+		System.out.println("haha"+nodeUri);
 		String data = JerseyClient.sendToServer(nodeUri, "", "delete");	
 		System.out.println(data);
 	}
-	public void deleteNode(int nodeId){
-		String data = SERVER_ROOT_URI+"node/"+nodeId;
-		System.out.println("haha"+data);
-		deleteNode(data);
+	
+	/**
+	 * 
+	* @Description: 删除一个节点的所有属性
+	* @param nodeId：
+	* @return：
+	 */
+	public void deleteAllPropertiesOnNode(int nodeId){
+		String nodeUri = SERVER_ROOT_URI+"node/"+nodeId+"/properties";
+		//System.out.println(""+nodeUri);
+		String data = JerseyClient.sendToServer(nodeUri, "", "delete");	
+		System.out.println(data);
+	}
+	
+	/**
+	 * 
+	* @Description: 删除一个节点的某个属性
+	* @param nodeId：
+	* @return：
+	 */
+	public void deleteOnePropertyOnNode(int nodeId,String propertyName){
+		String nodeUri = SERVER_ROOT_URI+"node/"+nodeId+"/properties/"+propertyName;
+		System.out.println(""+nodeUri);
+		String data = JerseyClient.sendToServer(nodeUri, "", "delete");	
+		System.out.println(data);
+		
 	}
 
 }

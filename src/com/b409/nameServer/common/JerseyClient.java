@@ -40,6 +40,7 @@ public class JerseyClient {
 			}
 			System.out.println(reminderString);
 			dataString = response.getEntity(String.class);
+			System.out.println(String.format("POST : [%s]  status code: [%d]",uri, status));
 			break;
 		}
 		case "get": {
@@ -49,6 +50,7 @@ public class JerseyClient {
 					.get(ClientResponse.class);
 			status = response.getStatus();
 			dataString = response.getEntity(String.class);
+			System.out.println(String.format("GET : [%s]  status code: [%d]",uri, status));
 			break;
 		}
 		case "put": {
@@ -59,6 +61,7 @@ public class JerseyClient {
 					.put(ClientResponse.class);
 			status = response.getStatus();
 			//dataString = response.getEntity(String.class);
+			System.out.println(String.format("PUT : [%s]  status code: [%d]",uri, status));
 			break;
 		}
 		case "delete": {
@@ -69,18 +72,16 @@ public class JerseyClient {
 			String reminderString="";
 			switch(status){
 			case 204:reminderString="删除成功！";break;
-			case 404:reminderString="要删除的节点不存在！";break;
-			case 409:reminderString="节点有关系存在，请先删除关系";break;
+			case 404:reminderString="删除失败，要删除的值不存在！";break;
+			case 409:reminderString="删除失败，有关系存在，请先删除关系";break;
 			}
+			System.out.println(String.format("DELETE : [%s]  status code: [%d]",uri, status));
 			System.out.println(reminderString);
 			break;
-
 		}
 		}
 		
-		System.out.println(String.format(
-				"Send to: [%s] \n status code: [%d]",
-				uri, status));
+		//System.out.println(String.format("Send to: [%s]  status code: [%d]",uri, status));
 		return dataString;
 
 	}

@@ -31,6 +31,7 @@ public class NameServerImplTest {
 //		String uriString = "http://192.168.0.187:7474/db/data/node/283";
 //		nameServerImpl.updateOnePropertyOnNode(uriString, "test", "bar");
 //		
-		nameServerImpl.getPropertiesOfKeyOfNode(283);
+//		nameServerImpl.getPropertiesOfKeyOfNode(283);
+		nameServerImpl.deleteOnePropertyOnNode(289,"lab.");
 	}
 }
