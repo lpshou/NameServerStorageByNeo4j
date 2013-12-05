@@ -74,7 +74,8 @@ public class GenerateJson {
 		return sb.toString();
 	}
 
-	public static String generateJsonCypher(String cypherString,
+	//获得两个节点之间关系
+	public static String generateJsonCypherForgetRelationshipTypeBetweenTwoNode(String cypherString,
 			String nameNode1, String nameNode2) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{ \"query\" : \"");
@@ -82,6 +83,7 @@ public class GenerateJson {
 		sb.append("\", \"params\" : { \"name1\" : \"");
 		sb.append(nameNode1);
 		sb.append("\", \"name2\" : \"");
+		sb.append(nameNode2);
 		sb.append("\" } }");
 		return sb.toString();
 	}

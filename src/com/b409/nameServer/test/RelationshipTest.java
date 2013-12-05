@@ -18,11 +18,15 @@ public class RelationshipTest {
 //		List<String>labels = new ArrayList<String>();
 //		labels.add("home");
 //		labels.add("Friend");
-//		
-//		relationshipImpl.getRelationshipOfNode(nodeUri2, "out", labels);
+////		
+//		relationshipImpl.getRelationshipOfNode(282, "out", labels);
+//		relationshipImpl.getAllRelationships();
 
-		//relationshipImpl.getAllRelationships();
-//		relationshipImpl.
+//		relationshipImpl.getRelationshipTypeBetweenTwoNode("liupeng", "huangshaojian");
+//		relationshipImpl.updatePropertiesOnRelationship(290, "{\"rel\":\"test\"}");
+//		relationshipImpl.deletePropertiesOnRelationship(290);
+		relationshipImpl.deleteOnePropertyOnRelationship(291, "rel");
+		
 	
 	
 	

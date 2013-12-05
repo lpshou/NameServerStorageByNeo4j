@@ -17,7 +17,7 @@ public class CommonTool implements Config{
 	
 	//由节点id得到节点的uri
 	public static String getNodeUriFromNodeId(int nodeId){
-		String nodeUri = SERVER_ROOT_URI + nodeId;
+		String nodeUri = SERVER_ROOT_URI + "node/" + nodeId;
 		return nodeUri;
 	}
 	

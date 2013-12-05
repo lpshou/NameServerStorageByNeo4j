@@ -51,17 +51,28 @@ public class JerseyClient {
 			status = response.getStatus();
 			dataString = response.getEntity(String.class);
 			System.out.println(String.format("GET : [%s]  status code: [%d]",uri, status));
+			String reminderString="";
+			switch(status){
+			case 200:reminderString="成功获取";break;
+			}
+			System.out.println(reminderString);
 			break;
 		}
 		case "put": {
 			response = resource
 					.accept(MediaType.APPLICATION_JSON)
 					.type(MediaType.APPLICATION_JSON)
-					.entity("\""+jsonString+"\"")
+					.entity(jsonString)  //此处在RelationshipImpl中updateRelationship用到
 					.put(ClientResponse.class);
+			String reminderString="";
 			status = response.getStatus();
-			//dataString = response.getEntity(String.class);
+			switch(status){
+			case 400:reminderString="失败，不存在！";break;
+			case 204:reminderString="成功更新";break;
+			}
 			System.out.println(String.format("PUT : [%s]  status code: [%d]",uri, status));
+			System.out.println(reminderString);
+			//dataString = response.getEntity(String.class);
 			break;
 		}
 		case "delete": {
