@@ -50,6 +50,7 @@ public class NameServerImplTest {
 //		nameServerImpl.dropOneIndexFromLabel("User", "name");
 //		nameServerImpl.CreateOneIndexOnLabel("User", "name");
 //		nameServerImpl.listIndexsForLabel("User");
+		nameServerImpl.listAllLabelsInGraph();
 		
 	}
 }
