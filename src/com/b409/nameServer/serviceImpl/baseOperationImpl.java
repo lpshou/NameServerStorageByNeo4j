@@ -15,12 +15,12 @@ import org.neo4j.example.helloworld.TraversalDescription;
 
 import com.b409.nameServer.common.Config;
 import com.b409.nameServer.common.GenerateJson;
-import com.b409.nameServer.service.IbaseOperation;
+import com.b409.nameServer.service.BaseOperationInterface;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class baseOperationImpl implements IbaseOperation,Config {
+public class baseOperationImpl implements BaseOperationInterface,Config {
 
 	// 测试数据库是否正常运行（get）
 	public boolean databaseIsRunning() {

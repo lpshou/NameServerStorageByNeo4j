@@ -2,7 +2,7 @@ package com.b409.nameServer.service;
 
 import java.util.List;
 
-public interface IForNameServer {
+public interface NameServerInterface {
 	
 	//节点的相关操作
 	//--------------------------------------------------------------------------------

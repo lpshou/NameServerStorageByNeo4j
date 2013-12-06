@@ -4,7 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public interface IbaseOperation {
+public interface BaseOperationInterface {
 
 	// 基本常量
 	//public static final String SERVER_ROOT_URI = "http://192.168.0.187:7474/db/data/";

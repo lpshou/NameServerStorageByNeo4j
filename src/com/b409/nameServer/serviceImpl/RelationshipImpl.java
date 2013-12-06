@@ -13,12 +13,12 @@ import com.b409.nameServer.common.CommonTool;
 import com.b409.nameServer.common.Config;
 import com.b409.nameServer.common.GenerateJson;
 import com.b409.nameServer.common.JerseyClient;
-import com.b409.nameServer.service.IForRelationship;
+import com.b409.nameServer.service.RelationshipInterface;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class RelationshipImpl implements IForRelationship, Config {
+public class RelationshipImpl implements RelationshipInterface, Config {
 	
 	/**
 	 * 
