@@ -3,6 +3,17 @@ package com.b409.nameServer.common;
 import java.net.URI;
 
 public class GenerateJson {
+	
+	//为一个label创建一个index
+	public static String generateJsonForCreateIndexOnLabel(String indexName){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{ \"property_keys\" : [ \"");
+		sb.append(indexName);
+		sb.append("\"] }");
+
+		
+		return sb.toString();	
+	}
 	// 建立两个节点之间关系的json串
 	public static String generateJsonForCreateRelationshipBetweenTwoNodes(String nodeUri, String relationshipType,String relationshipData){
 		StringBuilder sb = new StringBuilder();

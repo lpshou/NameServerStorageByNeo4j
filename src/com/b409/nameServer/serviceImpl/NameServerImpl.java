@@ -323,5 +323,66 @@ public class NameServerImpl implements IForNameServer,Config {
 		//--------------------------------------------------------------------------------
 		
 		
+		//index相关操作
+		//--------------------------------------------------------------------------------
+		/**
+		 * 
+		* @Description: 列出一个label的所有index
+		* @param label：
+		* @return：
+		 */
+		public List<String> listIndexsForLabel(String label){
+			String uriString = SERVER_ROOT_URI + "schema/index/" + label;
+			System.out.println(uriString);
+			String data= JerseyClient.sendToServer(uriString, "{}", "get");
+			System.out.println(data);
+			JSONArray jsonArray = JSONArray.fromObject(data);
+			List<String> indexsList = new ArrayList<String>();
+			if(jsonArray.size() == 0){
+				//return indexsList;
+			}else {
+				for(int i=0;i<jsonArray.size();i++){
+					JSONObject jsonObject = JSONObject.fromObject(jsonArray.getString(i));
+					JSONArray propertyKeyString = JSONArray.fromObject(jsonObject.getString("property-keys"));
+					indexsList.add(propertyKeyString.getString(0));
+				}
+			}
+			
+			for(int i=0;i<indexsList.size();i++)
+				System.out.println(indexsList.get(i));
+			return indexsList;
+		}
+		
+		/**
+		 * 
+		* @Description: 删掉一个label上的某个index
+		* @param labelName
+		* @param indexName：
+		* @return：
+		 */
+		public void dropOneIndexFromLabel(String labelName, String indexName){
+			String uriString = SERVER_ROOT_URI + "schema/index/" + labelName + "/" + indexName;
+			System.out.println(uriString);
+			JerseyClient.sendToServer(uriString, "{}", "delete");
+		}
+		
+		/**
+		 * 
+		* @Description: 在一个label上增加一个index
+		* @param labelName
+		* @param indexName：
+		* @return：
+		 */
+		public void CreateOneIndexOnLabel(String labelName, String indexName){
+			String uriString = SERVER_ROOT_URI + "schema/index/" + labelName;
+			String jsonString = GenerateJson.generateJsonForCreateIndexOnLabel("name");
+			System.out.println(jsonString);
+			JerseyClient.sendToServer(uriString, jsonString, "post");
+		}
+		
+		
+		//--------------------------------------------------------------------------------
+		
+
 
 }

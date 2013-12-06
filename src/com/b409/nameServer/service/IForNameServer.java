@@ -148,9 +148,43 @@ public interface IForNameServer {
 	 */
 	public List<String> listAllLabelsInGraph();
 	
+
+	
 	//--------------------------------------------------------------------------------
 	
 	
+	
+	//index相关操作
+	//--------------------------------------------------------------------------------
+	/**
+	 * 
+	* @Description: 列出一个label的所有index
+	* @param label：
+	* @return：
+	 */
+	public List<String> listIndexsForLabel(String label);
+	
+	
+	/**
+	 * 
+	* @Description: 删掉一个label上的某个index
+	* @param labelName
+	* @param indexName：
+	* @return：
+	 */
+	public void dropOneIndexFromLabel(String labelName, String indexName);
+	
+	/**
+	 * 
+	* @Description: 在一个label上增加一个index
+	* @param labelName
+	* @param indexName：
+	* @return：
+	 */
+	public void CreateOneIndexOnLabel(String labelName, String indexName);
+	
+	
+	//--------------------------------------------------------------------------------
 	
 
 }

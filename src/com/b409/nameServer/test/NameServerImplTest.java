@@ -22,7 +22,7 @@ public class NameServerImplTest {
 		//创建多个节点（包括一个）
 		//nameServerImpl.createNodeWithProperties("user", "[{},{}]");
 		//nameServerImpl.createNodeWithProperties("user", "{}");
-//		nameServerImpl.setAllPropertiesOnNode(284, "{\"lab.\" : \" b409\", \"name\" : \"hh\"}");
+//		nameServerImpl.setAllPropertiesOnNode(284, "{\"lab\" : \" b409\", \"name\" : \"hh\"}");
 		//nameServerImpl.setAllPropertiesOnNode("http://192.168.0.187:7474/db/data/node/283", "{\"foo\" : \" b4090\"}");
 		//nameServerImpl.getMessageOfNode(280);
 		//nameServerImpl.getPropertieOfNode(280);
@@ -44,8 +44,12 @@ public class NameServerImplTest {
 //		nameServerImpl.listAllLabelsOfNode(287);
 //		nameServerImpl.getAllNodesWithLabel("User");
 //		nameServerImpl.getNodeWithLabelAndProperty("User", "name", "hh");
-		nameServerImpl.listAllLabelsInGraph();
-		System.out.println("-----------------");
+//		nameServerImpl.listAllLabelsInGraph();
+//		System.out.println("-----------------");
+//		nameServerImpl.listIndexsForLabel("User");
+//		nameServerImpl.dropOneIndexFromLabel("User", "name");
+//		nameServerImpl.CreateOneIndexOnLabel("User", "name");
+//		nameServerImpl.listIndexsForLabel("User");
 		
 	}
 }
