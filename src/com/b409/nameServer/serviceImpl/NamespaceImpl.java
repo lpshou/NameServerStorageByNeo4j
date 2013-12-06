@@ -12,9 +12,9 @@ import com.b409.nameServer.common.CommonTool;
 import com.b409.nameServer.common.Config;
 import com.b409.nameServer.common.GenerateJson;
 import com.b409.nameServer.common.JerseyClient;
-import com.b409.nameServer.service.NameServerInterface;
+import com.b409.nameServer.service.NamespaceInterface;
 
-public class NameServerImpl implements NameServerInterface,Config {
+public class NamespaceImpl implements NamespaceInterface,Config {
 	
 	
 	//节点相关操作

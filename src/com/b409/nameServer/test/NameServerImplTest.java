@@ -13,12 +13,12 @@ import java.util.Set;
 
 
 import com.b409.nameServer.common.CommonTool;
-import com.b409.nameServer.serviceImpl.NameServerImpl;
+import com.b409.nameServer.serviceImpl.NamespaceImpl;
 
 public class NameServerImplTest {
 	public static void main(String[] args) throws URISyntaxException {
 
-		NameServerImpl nameServerImpl = new NameServerImpl();
+		NamespaceImpl nameServerImpl = new NamespaceImpl();
 		//创建多个节点（包括一个）
 		//nameServerImpl.createNodeWithProperties("user", "[{},{}]");
 		//nameServerImpl.createNodeWithProperties("user", "{}");
