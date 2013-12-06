@@ -92,9 +92,9 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 			int relationshipId = CommonTool.getRelationshipIdFromRelationshipUri(relationship);
 			relationships.add(relationshipId);
 		}
-		for(int j=0;j<relationships.size();j++)
-			System.out.println(relationships.get(j));
-			
+//		for(int j=0;j<relationships.size();j++)
+//			System.out.println(relationships.get(j));
+//			
 		return relationships;
 	}
 	

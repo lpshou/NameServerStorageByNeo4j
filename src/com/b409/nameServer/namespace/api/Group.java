@@ -8,6 +8,9 @@ import com.b409.nameServer.serviceImpl.NamespaceImpl;
 import com.b409.nameServer.serviceImpl.RelationshipImpl;
 
 public class Group {
+	//查看所有的组：public List<Integer> listAllGroup()
+	//创建一个组：public void createGroup(String groupName)
+	//解散一个组：public void deleteGroup(String groupName)
 	NamespaceImpl namespace = new NamespaceImpl();
 	RelationshipImpl relationship = new RelationshipImpl();
 	/**
@@ -39,7 +42,7 @@ public class Group {
 		}else{
 			String propsString = "{\"name\": \""+groupName+"\", \"createTime\": \""+timeString+"\"}";
 			//System.out.println(propsString);
-			namespace.createNodeWithProperties("GROUP", propsString);
+			namespace.createNodeWithProperties("Group", propsString);
 			System.out.println("创建组成功");
 		}
 	}
@@ -61,9 +64,8 @@ public class Group {
 				List<String> labels = new ArrayList<String>();
 				labels.add("contains");
 				labels.add("friend");
-				labels.add("evaluate");
-				labels.add("interest");
-				List<Integer> relationshipIds = relationship.getRelationshipOfNode(groups.get(i), "all", labels);
+				labels.add("like");
+				List<Integer> relationshipIds = relationship.getRelationshipOfNode(groups.get(i), "out", labels);
 				for(int j=0;j<relationshipIds.size();j++)
 					relationship.deleteRelationship(relationshipIds.get(j));
 				namespace.deleteNode(groups.get(i));

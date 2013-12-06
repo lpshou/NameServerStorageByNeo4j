@@ -46,8 +46,8 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 			uris.add(uriTemp);
 		}
 		
-		for(int j=0;j<uris.size();j++)
-			System.out.println(uris.get(j));
+//		for(int j=0;j<uris.size();j++)
+//			System.out.println(uris.get(j));
 		return uris;
 	}
 	
@@ -55,9 +55,9 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 	//删除一个节点
 	public void deleteNode(int nodeId){
 		String nodeUri = SERVER_ROOT_URI+"node/"+nodeId;
-		System.out.println("haha"+nodeUri);
+//		System.out.println("haha"+nodeUri);
 		String data = JerseyClient.sendToServer(nodeUri, "", "delete");	
-		System.out.println(data);
+//		System.out.println(data);
 	}
 	
 	/**
