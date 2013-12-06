@@ -30,15 +30,22 @@ public interface RelationshipInterface {
 	* @return：
 	 */
 	public void updatePropertiesOnRelationship(int relationshipId,String props);
+	//---------------------------------------------------------------------------------------
 	
-	
-	
-	
+	//删除关系
+	//---------------------------------------------------------------------------------------
+	/**
+	 * 
+	* @Description: 删除一个关系
+	* @param relationshipId：
+	* @return：
+	 */
+	public void deleteRelationship(int relationshipId);
 	//---------------------------------------------------------------------------------------
 	
 	
 	
-	//删除关系
+	//删除关系的属性
 	//---------------------------------------------------------------------------------------
 	/**
 	 * 
@@ -74,7 +81,7 @@ public interface RelationshipInterface {
 	* @param labels:具体关系，放入list中
 	* @return：所有关系的uri
 	 */
-	public List<String> getRelationshipOfNode(int nodeId,String direction,List<String>labels);
+	public List<Integer> getRelationshipOfNode(int nodeId,String direction,List<String>labels);
 	
 	/**
 	 * 

@@ -28,7 +28,7 @@ public class JerseyClient {
 		case "post": {
 			boolean flag = false;
 			flag = jsonString.contains("{")||jsonString.contains("[");
-			System.out.println(flag);
+//			System.out.println(flag);
 			if(flag){
 				response = resource
 						.accept(MediaType.APPLICATION_JSON)
@@ -51,8 +51,8 @@ public class JerseyClient {
 			case 400:reminderString="失败";break;
 			
 			}
-			System.out.println(String.format("POST : [%s]  status code: [%d]",uri, status));
-			System.out.println(reminderString);
+//			System.out.println(String.format("POST : [%s]  status code: [%d]",uri, status));
+//			System.out.println(reminderString);
 			if(status != 204)
 				dataString = response.getEntity(String.class);
 			response.close();
@@ -65,12 +65,12 @@ public class JerseyClient {
 					.get(ClientResponse.class);
 			status = response.getStatus();
 			dataString = response.getEntity(String.class);
-			System.out.println(String.format("GET : [%s]  status code: [%d]",uri, status));
+//			System.out.println(String.format("GET : [%s]  status code: [%d]",uri, status));
 			String reminderString="";
 			switch(status){
 			case 200:reminderString="成功获取";break;
 			}
-			System.out.println(reminderString);
+//			System.out.println(reminderString);
 			response.close();
 			break;
 		}

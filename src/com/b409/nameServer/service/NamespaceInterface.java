@@ -66,6 +66,15 @@ public interface NamespaceInterface {
 	* @return：节点的属性（属性）
 	 */
 	public List<String> getPropertiesOfKeyOfNode(int nodeId);
+	
+	/**
+	 * 
+	* @Description: 根据节点id获得节点name
+	* @param nodeId
+	* @return：
+	* @return：
+	 */
+	public String getNameOfNode(int nodeId);
 	//----------------------------更新
 	/**
 	 * 

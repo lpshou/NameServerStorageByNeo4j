@@ -70,7 +70,7 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 	* @param labels:具体关系，放入list中
 	* @return：所有关系的uri
 	 */
-	public List<String> getRelationshipOfNode(int nodeId,String direction,List<String>labels){
+	public List<Integer> getRelationshipOfNode(int nodeId,String direction,List<String>labels){
 		String nodeUri = CommonTool.getNodeUriFromNodeId(nodeId);
 		nodeUri = nodeUri + "/relationships/"+direction.toLowerCase();
 		if(labels.size()!=0)
@@ -81,7 +81,7 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 				nodeUri+="&";
 		}
 		//System.out.println(nodeUri);
-		List<String>relationships = new ArrayList<>();
+		List<Integer>relationships = new ArrayList<>();
 		String data = JerseyClient.sendToServer(nodeUri, "{}", "get");
 		//System.out.println(data);
 		
@@ -89,7 +89,8 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 		for(int i=0;i<jsonArray.size();i++){
 			JSONObject jsonObject = JSONObject.fromObject(jsonArray.get(i));
 			String relationship = jsonObject.getString("self");
-			relationships.add(relationship);
+			int relationshipId = CommonTool.getRelationshipIdFromRelationshipUri(relationship);
+			relationships.add(relationshipId);
 		}
 		for(int j=0;j<relationships.size();j++)
 			System.out.println(relationships.get(j));
@@ -178,5 +179,20 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 		JerseyClient.sendToServer(relationshipUri, "{}", "delete");
 
 	}
+	
+	//删除关系
+	//---------------------------------------------------------------------------------------
+	/**
+	 * 
+	* @Description: 删除一个关系
+	* @param relationshipId：
+	* @return：
+	 */
+	public void deleteRelationship(int relationshipId){
+		String uriString = SERVER_ROOT_URI + "relationship/"+relationshipId;
+		JerseyClient.sendToServer(uriString, "{}", "delete");
+	}
+	//---------------------------------------------------------------------------------------
+	
 
 }

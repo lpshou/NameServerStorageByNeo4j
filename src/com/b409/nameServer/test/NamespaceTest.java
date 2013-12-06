@@ -15,7 +15,7 @@ import java.util.Set;
 import com.b409.nameServer.common.CommonTool;
 import com.b409.nameServer.serviceImpl.NamespaceImpl;
 
-public class NameServerImplTest {
+public class NamespaceTest {
 	public static void main(String[] args) throws URISyntaxException {
 
 		NamespaceImpl nameServerImpl = new NamespaceImpl();
@@ -50,7 +50,8 @@ public class NameServerImplTest {
 //		nameServerImpl.dropOneIndexFromLabel("User", "name");
 //		nameServerImpl.CreateOneIndexOnLabel("User", "name");
 //		nameServerImpl.listIndexsForLabel("User");
-		nameServerImpl.listAllLabelsInGraph();
-		
+//		nameServerImpl.listAllLabelsInGraph();
+//		nameServerImpl.getPropertiesOfNode(7);
+		nameServerImpl.getNameOfNode(7);
 	}
 }

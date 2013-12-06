@@ -70,7 +70,7 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 		List<Integer> nodeIds = new ArrayList<Integer>();
 		nodeIds.clear();
 		String uriString = SERVER_ROOT_URI + "label/" + label + "/nodes";
-		System.out.println(uriString);
+//		System.out.println(uriString);
 		String data  = JerseyClient.sendToServer(uriString, "{}", "get");
 //		System.out.println(data);
 		JSONArray jsonArray = JSONArray.fromObject(data);
@@ -97,7 +97,7 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 	public List<Integer> getNodeWithLabelAndProperty(String label, String propertyName,String propertyValue){
 		List<Integer>nodes = new ArrayList<Integer>();
 		String uriString = SERVER_ROOT_URI + "label/" + label + "/nodes?" + propertyName + "=%22" + propertyValue + "%22";
-		System.out.println(uriString);
+		//System.out.println(uriString);
 		String dataString = JerseyClient.sendToServer(uriString, "{}", "get");
 		//System.out.println(dataString);
 		JSONArray jsonArray = JSONArray.fromObject(dataString);
@@ -107,8 +107,8 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 			int nodeId = CommonTool.getNodeIdFromNodeUri(nodeUriString);
 			nodes.add(nodeId);
 		}
-		for(int i=0;i<nodes.size();i++)
-			System.out.println(nodes.get(i));
+//		for(int i=0;i<nodes.size();i++)
+//			System.out.println(nodes.get(i));
 		
 		return nodes;
 	}
@@ -137,10 +137,10 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 	public String getMessageOfNode(int nodeId){
 		final String uri = SERVER_ROOT_URI + "cypher";
 		String jsonString=GenerateJson.generateJsonForGetNodeProperties(nodeId);
-		System.out.println(jsonString);
+		//System.out.println(jsonString);
 		String data = JerseyClient.sendToServer(uri, jsonString, "post");
 		
-		System.out.println(data);
+		//System.out.println(data);
 		return data;
 	}
 	
@@ -164,14 +164,31 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 		String dataString = getMessageOfNode(nodeId);
 		JSONObject jsonObject = JSONObject.fromObject(dataString);
 		String data = jsonObject.getString("data");
+//		System.out.println(data);		
 		JSONArray array = JSONArray.fromObject(data);
 		String data1 = array.getString(0);
 		JSONArray array2 = JSONArray.fromObject(data1);
 		String data2 = array2.getString(0);
 		JSONObject jsonObject2 = JSONObject.fromObject(data2);
 		String result = jsonObject2.getString("data");
+		
 		//System.out.println(result);		
 		return result;
+	}
+	
+	/**
+	 * 
+	* @Description: 根据节点id获得节点name
+	* @param nodeId
+	* @return：
+	* @return：
+	 */
+	public String getNameOfNode(int nodeId){
+		String dataString = getPropertiesOfNode(nodeId);
+		JSONObject jsonObject = JSONObject.fromObject(dataString);
+		String resultString = jsonObject.getString("name");
+		System.out.println(resultString);
+		return resultString;
 	}
 	/**
 	 * 
