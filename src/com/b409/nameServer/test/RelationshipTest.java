@@ -15,17 +15,20 @@ public class RelationshipTest {
 //		//String relationshipData="{}";
 //		relationshipImpl.createRelationshipBetweenTwoNode(nodeUri1, nodeUri2, relationshipType, relationshipData);
 //	
-//		List<String>labels = new ArrayList<String>();
-//		labels.add("home");
-//		labels.add("Friend");
-////		
+		List<String>labels = new ArrayList<String>();
+		labels.add("contains");
+		labels.add("friend");
+		
+		relationshipImpl.getNodeIdHaveRelationshipWithOneNode(10, "all", labels);
 //		relationshipImpl.getRelationshipOfNode(282, "out", labels);
 //		relationshipImpl.getAllRelationships();
 
 //		relationshipImpl.getRelationshipTypeBetweenTwoNode("liupeng", "huangshaojian");
 //		relationshipImpl.updatePropertiesOnRelationship(290, "{\"rel\":\"test\"}");
 //		relationshipImpl.deletePropertiesOnRelationship(290);
-		relationshipImpl.deleteOnePropertyOnRelationship(291, "rel");
+//		relationshipImpl.deleteOnePropertyOnRelationship(291, "rel");
+//		relationshipImpl.getRelationshipTypeFromUserToGroup("zhang", "计算机1104");
+//		relationshipImpl.createRelationshipBetweenTwoNode(8, 11, "contains", "{}");
 		
 	
 	

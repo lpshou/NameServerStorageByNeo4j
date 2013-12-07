@@ -70,21 +70,18 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 	* @param labels:具体关系，放入list中
 	* @return：所有关系的uri
 	 */
-	public List<Integer> getRelationshipOfNode(int nodeId,String direction,List<String>labels){
+	public List<Integer> getRelationshipIdsOfOneNode(int nodeId,String direction,List<String>relationshipTypes){
 		String nodeUri = CommonTool.getNodeUriFromNodeId(nodeId);
 		nodeUri = nodeUri + "/relationships/"+direction.toLowerCase();
-		if(labels.size()!=0)
+		if(relationshipTypes.size()!=0)
 			nodeUri+="/";
-		for(int i=0;i<labels.size();i++){
-			nodeUri+=labels.get(i);
-			if(i != (labels.size()-1))
+		for(int i=0;i<relationshipTypes.size();i++){
+			nodeUri+=relationshipTypes.get(i);
+			if(i != (relationshipTypes.size()-1))
 				nodeUri+="&";
 		}
-		//System.out.println(nodeUri);
 		List<Integer>relationships = new ArrayList<>();
 		String data = JerseyClient.sendToServer(nodeUri, "{}", "get");
-		//System.out.println(data);
-		
 		JSONArray jsonArray = JSONArray.fromObject(data);
 		for(int i=0;i<jsonArray.size();i++){
 			JSONObject jsonObject = JSONObject.fromObject(jsonArray.get(i));
@@ -94,10 +91,39 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 		}
 //		for(int j=0;j<relationships.size();j++)
 //			System.out.println(relationships.get(j));
-//			
 		return relationships;
 	}
-	
+	/**
+	 * 
+	* @Description: 获取与一个节点有关系的节点的id
+	* @param nodeId
+	* @param direction:关系方向，有in、out、all;
+	* @param relationshipTypes：具体关系，放入list中
+	* @return：所有节点的ids
+	 */
+	public List<Integer> getNodeIdHaveRelationshipWithOneNode(int nodeId,String direction,List<String>relationshipTypes){
+		String nodeUri = CommonTool.getNodeUriFromNodeId(nodeId);
+		nodeUri = nodeUri + "/relationships/"+direction.toLowerCase();
+		if(relationshipTypes.size()!=0)
+			nodeUri+="/";
+		for(int i=0;i<relationshipTypes.size();i++){
+			nodeUri+=relationshipTypes.get(i);
+			if(i != (relationshipTypes.size()-1))
+				nodeUri+="&";
+		}
+		List<Integer>nodeIds = new ArrayList<>();
+		String data = JerseyClient.sendToServer(nodeUri, "{}", "get");
+//		System.out.println(data);
+		JSONArray jsonArray = JSONArray.fromObject(data);
+		for(int i=0;i<jsonArray.size();i++){
+			JSONObject jsonObject = JSONObject.fromObject(jsonArray.get(i));
+			String nodeUriString = jsonObject.getString("end");
+			nodeIds.add(CommonTool.getNodeIdFromNodeUri(nodeUriString));
+		}
+//		for(int j=0;j<nodeIds.size();j++)
+//			System.out.println(nodeIds.get(j));
+		return nodeIds;
+	}
 	/**
 	 * 
 	* @Description: 得到两个节点之间的关系，参数为节点的name值
@@ -109,25 +135,13 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 			String nameNode2) {
 
 		final String cypherUri = SERVER_ROOT_URI + "cypher";
-
 		String cypherString = "match (n:user) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
-
 		System.out.println(cypherString);
 		String cypherJson = GenerateJson.generateJsonCypherForgetRelationshipTypeBetweenTwoNode(cypherString,
 				nameNode1, nameNode2);
 		System.out.println(cypherJson);
 
 		String dataResult = JerseyClient.sendToServer(cypherUri, cypherJson, "post");
-//		WebResource resource = Client.create().resource(cypherUri);
-//
-//		// POST JSON to the relationships URI
-//		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
-//				.type(MediaType.APPLICATION_JSON).entity(cypherJson)
-//				.post(ClientResponse.class);
-
-		// final URI location = response.getLocation();
-//		System.out.println(String.format("POST to [%s], status code [%d]",
-//				cypherUri, response.getStatus()));
 //		String strResult = response.getEntity(String.class);
 		System.out.println(dataResult);
 		JSONObject jsonObject = JSONObject.fromObject(dataResult);
@@ -141,7 +155,35 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 		return strList;
 	}
 	
-	
+	/**
+	 * 
+	* @Description: 得到user节点到group节点之间的关系类型
+	* @param userName：user名
+	* @param groupName：group名
+	* @return：关系类型
+	 */
+	public String getRelationshipTypeFromUserToGroup(String userName, String groupName){
+		String cypherUri = SERVER_ROOT_URI + "cypher";
+		String cypherString  = "match (n:User) where n.name={name1} match n-[r]->friend where friend.name={name2} return r";
+		String cypherJsonString = GenerateJson.generateJsonCypherForgetRelationshipTypeBetweenTwoNode(cypherString, userName, groupName);
+//		System.out.println(cypherJsonString);
+		String dataResult = JerseyClient.sendToServer(cypherUri, cypherJsonString, "post");
+//		System.out.println(dataResult);
+		JSONObject jsonObject = JSONObject.fromObject(dataResult);
+		JSONArray jsonArray = JSONArray.fromObject(jsonObject.get("data"));
+		if(jsonArray.size() == 0){
+			//System.out.println("用户"+userName+"到组"+groupName+"不存在关系");
+			return "";
+		}else{
+			JSONArray jsonArray2 = JSONArray.fromObject(jsonArray.get(0));
+			JSONObject jsonObject2 = JSONObject.fromObject(jsonArray2.get(0));
+			String strTempString = jsonObject2.getString("type");
+//			System.out.println(strTempString);
+			return strTempString;
+		}
+	}
+	//更新关系
+	//--------------------------------------------------------------------------------------------------------------------
 	/**
 	 * 
 	* @Description: 更新一个关系的属性
@@ -155,7 +197,10 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 		System.out.println(props);
 		JerseyClient.sendToServer(relationshipUri, props, "put");
 	}
+	//---------------------------------------------------------------------------------------------------------------------
 	
+	//删除关系的属性
+	//---------------------------------------------------------------------------------------------------------------------
 	/**
 	 * 
 	* @Description: 删除一个关系上的所有属性
@@ -177,11 +222,13 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 	public void deleteOnePropertyOnRelationship(int relationshipId,String propertyName){
 		String relationshipUri = SERVER_ROOT_URI + "relationship/"+relationshipId + "/properties/"+propertyName;
 		JerseyClient.sendToServer(relationshipUri, "{}", "delete");
-
 	}
+	//----------------------------------------------------------------------------------------------------------------------
+	
+	
 	
 	//删除关系
-	//---------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * 
 	* @Description: 删除一个关系
@@ -191,6 +238,21 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 	public void deleteRelationship(int relationshipId){
 		String uriString = SERVER_ROOT_URI + "relationship/"+relationshipId;
 		JerseyClient.sendToServer(uriString, "{}", "delete");
+	}
+	
+	/**
+	 * 
+	* @Description: 删除一个节点的某种关系
+	* @param nodeId：节点id
+	* @param direction：关系方向，有all、in、out三种
+	* @param relationshipTypes：关系类型，有contains、friend、like、create四种
+	* @return：
+	 */
+	public void deleteRelationshipOfNode(int nodeId,String direction, List<String>relationshipTypes){
+		List<Integer> relationshipIds = getRelationshipIdsOfOneNode(nodeId, direction, relationshipTypes);
+		for(int i=0;i<relationshipIds.size();i++){
+			deleteRelationship(relationshipIds.get(i));
+		}
 	}
 	//---------------------------------------------------------------------------------------
 	

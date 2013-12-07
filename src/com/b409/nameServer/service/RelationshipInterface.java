@@ -12,7 +12,7 @@ public interface RelationshipInterface {
 	* @param nodeId1
 	* @param nodeId2
 	* @param relationshipType:关系名
-	* @param relationshipData:关系属性,json串形式eg："{\"rel\" : \"very good\"}"
+	* @param relationshipData:关系属性,json串形式eg："{\"rel\" : \"very good\"}" 为空："{}"
 	* @return：
 	 */
 	public void createRelationshipBetweenTwoNode(int nodeId1,int nodeId2, 
@@ -41,6 +41,16 @@ public interface RelationshipInterface {
 	* @return：
 	 */
 	public void deleteRelationship(int relationshipId);
+	
+	/**
+	 * 
+	* @Description: 删除一个节点的某种关系
+	* @param nodeId：节点id
+	* @param direction：关系方向，有all、in、out三种
+	* @param relationshipTypes：关系类型，有contains、friend、like、create四种
+	* @return：
+	 */
+	public void deleteRelationshipOfNode(int nodeId,String direction, List<String>relationshipTypes);
 	//---------------------------------------------------------------------------------------
 	
 	
@@ -75,14 +85,25 @@ public interface RelationshipInterface {
 	//--------------------------------------------------------------------------------------------------
 	/**
 	 * 
-	* @Description: 获取一个节点的关系(深度为1）
-	* @param nodeUri
+	* @Description: 获取一个节点的关系id
+	* @param nodeId:节点id
 	* @param direction:关系方向，有in、out、all;
-	* @param labels:具体关系，放入list中
-	* @return：所有关系的uri
+	* @param relationshipTypes:具体关系，放入list中
+	* @return：所有关系ids
 	 */
-	public List<Integer> getRelationshipOfNode(int nodeId,String direction,List<String>labels);
+	public List<Integer> getRelationshipIdsOfOneNode(int nodeId,String direction,List<String>relationshipTypes);
 	
+	
+	/**
+	 * 
+	* @Description: 获取与一个节点有关系的节点的id
+	* @param nodeId
+	* @param direction:关系方向，有in、out、all;
+	* @param relationshipTypes：具体关系，放入list中
+	* @return：所有节点的ids
+	 */
+	public List<Integer> getNodeIdHaveRelationshipWithOneNode(int nodeId,String direction,List<String>relationshipTypes);
+
 	/**
 	 * 
 	* @Description: 获取图中所有的关系label
@@ -99,6 +120,16 @@ public interface RelationshipInterface {
 	* @return：关系
 	 */
 	public  List<String> getRelationshipTypeBetweenTwoNode(String nameNode1,String nameNode2);
+
+	/**
+	 * 
+	* @Description: 得到user节点到group节点之间的关系类型
+	* @param userName：user名
+	* @param groupName：group名
+	* @return：关系类型,不存在关系返回"",存在关系则返回关系类型
+	 */
+	public String getRelationshipTypeFromUserToGroup(String userName, String groupName);
+	
 
 	//--------------------------------------------------------------------------------------------------
 	

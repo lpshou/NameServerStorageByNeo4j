@@ -7,12 +7,12 @@ public interface NamespaceInterface {
 	//节点的相关操作
 	//--------------------------------------------------------------------------------
 	/**
-	* @Description: 创建一个节点
+	* @Description: 创建节点（可以创建一个或多个节点比如，多个节点参数：("User", "[{},{}]"); 一个节点参数：("user", "{}")）
 	* @param label：节点的label
 	* @param props：属性值props为json串eg：{"a":"b"}，可以为空eg：{}
-	* @return	  ：返回值为创建的节点的uri 
+	* @return	  ：返回值为创建的节点的id，一个节点参数时，返回一个节点id；多个节点参数时，返回多个节点id
 	 */
-	public List<String> createNodeWithProperties(String label, String props);
+	public List<Integer> createNodeWithProperties(String label, String props);
 	/**
 	 * 
 	* @Description: 删除一个节点
@@ -35,16 +35,16 @@ public interface NamespaceInterface {
 	* @param label
 	* @param propertyName：属性名
 	* @param propertyValue：属性值
-	* @return：
+	* @return：节点不存在返回-1，节点存在返回节点值
 	 */
-	public List<Integer> getNodeWithLabelAndProperty(String label, String propertyName,String propertyValue);
+	public Integer getNodeWithLabelAndProperty(String label, String propertyName,String propertyValue);
 	//--------------------------------------------------------------------------------
 	
 	
 	
 	//节点的属性相关操作
 	//--------------------------------------------------------------------------------
-	//-------------------------------查询
+
 	/**
 	 * 
 	* @Description: 获取节点信息（包括属性、id、uri等等）
@@ -75,7 +75,7 @@ public interface NamespaceInterface {
 	* @return：
 	 */
 	public String getNameOfNode(int nodeId);
-	//----------------------------更新
+
 	/**
 	 * 
 	* @Description: 设置节点属性，将完全替换原有属性
@@ -94,7 +94,7 @@ public interface NamespaceInterface {
 	* @return：
 	 */
 	public void updateOnePropertyOnNode(String nodeUri,String key,String value);
-	//-----------------------------删除
+
 	/**
 	 * 
 	* @Description: 删除一个节点的所有属性

@@ -19,8 +19,8 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 	
 	//节点相关操作
 	//----------------------------------------------------------------------------------------------------
-	//创建一个节点，属性值props为json串eg：{"a":"b"},返回值为创建的节点的uri
-	public List<String> createNodeWithProperties(String label, String props){
+	//创建节点(一个或多个），属性值props为json串eg：{"a":"b"},返回值为创建的节点的uri
+	public List<Integer> createNodeWithProperties(String label, String props){
 		final String uri = SERVER_ROOT_URI + "cypher";
 		String jsonString="";
 		switch(label.toUpperCase()){
@@ -34,7 +34,7 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 		//System.out.println(data);
 		
 		//解析返回值，获得新创建的节点的URI
-		List<String>uris = new ArrayList<String>();
+		List<Integer>ids = new ArrayList<Integer>();
 		JSONObject jsonObject = JSONObject.fromObject(data);
 		JSONArray jsonArray = JSONArray.fromObject(jsonObject.get("data"));
 		//System.out.println(jsonArray);
@@ -43,12 +43,13 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 			//System.out.println("jsonArray2:"+jsonArray2);
 			JSONObject jsonObject2 = JSONObject.fromObject(jsonArray2.get(0));
 			String uriTemp = jsonObject2.getString("self");
-			uris.add(uriTemp);
+			int id = CommonTool.getNodeIdFromNodeUri(uriTemp);
+			ids.add(id);
 		}
 		
 //		for(int j=0;j<uris.size();j++)
 //			System.out.println(uris.get(j));
-		return uris;
+		return ids;
 	}
 	
 	
@@ -92,25 +93,19 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 	* @param label
 	* @param propertyName：属性名
 	* @param propertyValue：属性值
-	* @return：
+	* @return：节点不存在返回-1，节点存在返回节点值
 	 */
-	public List<Integer> getNodeWithLabelAndProperty(String label, String propertyName,String propertyValue){
-		List<Integer>nodes = new ArrayList<Integer>();
+	public Integer getNodeWithLabelAndProperty(String label, String propertyName,String propertyValue){
 		String uriString = SERVER_ROOT_URI + "label/" + label + "/nodes?" + propertyName + "=%22" + propertyValue + "%22";
-		//System.out.println(uriString);
 		String dataString = JerseyClient.sendToServer(uriString, "{}", "get");
-		//System.out.println(dataString);
 		JSONArray jsonArray = JSONArray.fromObject(dataString);
-		for(int i=0;i<jsonArray.size();i++){
-			JSONObject jsonObject = JSONObject.fromObject(jsonArray.get(i));
+		int nodeId = -1; 
+		if(jsonArray.size()!=0){
+			JSONObject jsonObject = JSONObject.fromObject(jsonArray.get(0));
 			String nodeUriString = jsonObject.getString("self");
-			int nodeId = CommonTool.getNodeIdFromNodeUri(nodeUriString);
-			nodes.add(nodeId);
+			nodeId = CommonTool.getNodeIdFromNodeUri(nodeUriString);
 		}
-//		for(int i=0;i<nodes.size();i++)
-//			System.out.println(nodes.get(i));
-		
-		return nodes;
+		return nodeId;
 	}
 	
 	//------------------------------------------------------------------------------------------------
