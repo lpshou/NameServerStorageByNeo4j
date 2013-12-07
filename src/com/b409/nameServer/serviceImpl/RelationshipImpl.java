@@ -182,6 +182,36 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 			return strTempString;
 		}
 	}
+	
+	/**
+	 * @Description: 得到group节点到user节点的关系id
+	 * @param userName
+	 * @param groupName
+	 * @return
+	 */
+	public Integer getRelationshipIdFromGroupToUser(String userName,String groupName){
+		String cypherUri = SERVER_ROOT_URI + "cypher";
+		String cypherString  = "match (n:Group) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
+		String cypherJsonString = GenerateJson.generateJsonCypherForgetRelationshipTypeBetweenTwoNode(cypherString, groupName, userName);
+//		System.out.println(cypherJsonString);
+		String dataResult = JerseyClient.sendToServer(cypherUri, cypherJsonString, "post");
+//		System.out.println(dataResult);
+		JSONObject jsonObject = JSONObject.fromObject(dataResult);
+		JSONArray jsonArray = JSONArray.fromObject(jsonObject.get("data"));
+		if(jsonArray.size() == 0){
+			//System.out.println("用户"+userName+"到组"+groupName+"不存在关系");
+			return -1;
+		}else{
+			JSONArray jsonArray2 = JSONArray.fromObject(jsonArray.get(0));
+			JSONObject jsonObject2 = JSONObject.fromObject(jsonArray2.get(0));
+			String strTempString = jsonObject2.getString("self");
+			int relationshipId = CommonTool.getRelationshipIdFromRelationshipUri(strTempString);
+//			System.out.println(strTempString);
+			return relationshipId;
+		}
+	}
+	
+	
 	//更新关系
 	//--------------------------------------------------------------------------------------------------------------------
 	/**

@@ -41,7 +41,7 @@ public class Group {
 	 */
 	public Integer createGroup(String groupName,String createUserName){
 		if(groupName.equals("")||createUserName.equals("")){
-			System.out.println("创建组失败：组名和用户名均不能为空！");
+			System.out.println("创建组"+groupName+"失败：组名和用户名均不能为空！");
 			return -1;
 		}
 		String timeString = CommonTool.getTime();
@@ -49,13 +49,13 @@ public class Group {
 		int groupId = namespace.getNodeWithLabelAndProperty("Group", "name", groupName);
 //		System.out.println(groupId);
 		if(groupId!=-1){
-			System.out.println("创建组失败：名字为"+groupName+"的组已经存在！");
+			System.out.println("创建组"+groupName+"失败：名字为"+groupName+"的组已经存在！");
 			return -1;
 		}else{
 			//查看用户是否存在
 			int userId = namespace.getNodeWithLabelAndProperty("User", "name", createUserName);
 			if(userId == -1){
-				System.out.println("创建组失败：用户"+createUserName+"不存在！");
+				System.out.println("创建组"+groupName+"失败：用户"+createUserName+"不存在！");
 				return -1;
 			}else{
 				String propsString = "{\"name\": \""+groupName+"\", \"createTime\": \""+timeString+
@@ -64,7 +64,7 @@ public class Group {
 				int groupId2 = groupIds.get(0);
 				//relationship.createRelationshipBetweenTwoNode(groupId2, userId, "contains", "{}");
 				relationship.createRelationshipBetweenTwoNode(userId, groupId2, "create", "{}");
-				System.out.println("创建组成功");
+				System.out.println("创建组"+groupName+"成功");
 				return 0;
 			}
 		}
@@ -79,18 +79,18 @@ public class Group {
 	 */
 	public Integer deleteGroup(String groupName,String userName){
 		if(groupName.equals("")||userName.equals("")){
-			System.out.println("解散组失败：组名和用户名不能为空！");
+			System.out.println("解散组"+groupName+"失败：组名和用户名不能为空！");
 			return -1;
 		}
 		int groupId = namespace.getNodeWithLabelAndProperty("Group", "name", groupName);
 //		System.out.println(groupId);
 		if(groupId == -1){
-			System.out.println("解散组成功：该组本来就不存在！");
+			System.out.println("解散组"+groupName+"成功：该组本来就不存在！");
 			return 0;
 		}else {
 			String relationshipTypeString = relationship.getRelationshipTypeFromUserToGroup(userName, groupName);
 			if(!relationshipTypeString.equals("create")){
-				System.out.println("解散组失败：用户"+userName+"不是改组的创建者！");
+				System.out.println("解散组"+groupName+"失败：用户"+userName+"不是改组的创建者！");
 				return -1;
 			}else{
 				List<String> relationshipTypes = new ArrayList<String>();
@@ -102,7 +102,7 @@ public class Group {
 				relationship.deleteRelationshipOfNode(groupId, "all", relationshipTypes);
 				//删除组节点
 				namespace.deleteNode(groupId);
-				System.out.println("解散组成功：该组被成功解散");
+				System.out.println("解散组"+groupName+"成功：该组被成功解散");
 				return 0;
 			}
 		}
@@ -123,7 +123,7 @@ public class Group {
 		}
 		int groupId = namespace.getNodeWithLabelAndProperty("Group", "name", groupName);
 		if(groupId == -1){
-			System.out.println("失败：该组不存在");
+			System.out.println("失败：该组"+groupName+"不存在");
 			return users;
 		}else {
 			List<String> relationshipTypes = new ArrayList<>();
@@ -131,7 +131,7 @@ public class Group {
 			relationshipTypes.add("create");
 			
 			List<Integer>nodeIds = relationship.getNodeIdHaveRelationshipWithOneNode(groupId, "all", relationshipTypes);
-			System.out.println("该组的用户如下：");
+			System.out.println("该组"+groupName+"的用户如下：");
 			for(int i=0;i<nodeIds.size();i++){
 				String userName  = namespace.getNameOfNode(nodeIds.get(i));
 				System.out.println(userName);
@@ -150,24 +150,23 @@ public class Group {
 	 */
 	public Integer addUserToGroup(String groupName, String userName){
 		if(groupName.equals("")||userName.equals("")){
-			System.out.println("加入组失败：组名和用户名不能为空！");
+			System.out.println("加入组"+groupName+"失败：组名和用户名不能为空！");
 			return -1;
 		}
 		int groupId = namespace.getNodeWithLabelAndProperty("Group", "name", groupName);
-//		System.out.println(groupId);
 		if(groupId == -1){
-			System.out.println("加入组失败：该组不存在！");
+			System.out.println("加入组"+groupName+"失败：该组不存在！");
 			return -1;
 		}else {
 			int userId = namespace.getNodeWithLabelAndProperty("User", "name", userName);
 			if(userId == -1){
-				System.out.println("加入组失败：用户不存在！");
+				System.out.println("加入组"+groupName+"失败：用户不存在！");
 				return -1;
 			}else{
 				String timeString = CommonTool.getTime();
 				//在组和用户之间建立contains关系
 				relationship.createRelationshipBetweenTwoNode(groupId, userId, "contains", "{\"time\" : \""+timeString+"\"}");
-				System.out.println("加入组成功");
+				System.out.println("加入组"+groupName+"成功");
 				return 0;
 			}
 		}
@@ -180,8 +179,35 @@ public class Group {
 	* @param userName：用户名
 	* @return：
 	 */
-	public void deleteUserFromGroup(String groupName, String userName){
-		
+	public Integer deleteUserFromGroup(String groupName, String userName){
+		if(groupName.equals("")||userName.equals("")){
+			System.out.println("将用户"+userName+"从组"+groupName+"删除失败：组名和用户名不能为空！");
+			return -1;
+		}
+		int groupId = namespace.getNodeWithLabelAndProperty("Group", "name", groupName);
+		if(groupId == -1){
+			System.out.println("将用户"+userName+"从组"+groupName+"删除失败：该组"+groupName+"不存在！");
+			return -1;
+		}else {
+			int userId = namespace.getNodeWithLabelAndProperty("User", "name", userName);
+			if(userId == -1){
+				System.out.println("将用户"+userName+"从组"+groupName+"删除失败：用户"+userName+"不存在！");
+				return -1;
+			}else{
+				//获取用户到组的关系
+				String relationshipType = relationship.getRelationshipTypeFromUserToGroup(userName, groupName);
+				if(relationshipType.equals("create")){
+					System.out.println("将用户"+userName+"从组"+groupName+"删除失败：用户"+userName+"是该组"+groupName+"的创建者");
+					return -1;
+				}else{
+					//删除该组到用户的contains关系
+					int relationshipId = relationship.getRelationshipIdFromGroupToUser(userName, groupName);
+					relationship.deleteRelationship(relationshipId);
+					System.out.println("将用户"+userName+"从组"+groupName+"删除成功");
+				}
+				return 0;
+			}
+		}
 	}
 	
 }

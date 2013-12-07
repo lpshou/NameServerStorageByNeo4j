@@ -114,8 +114,8 @@ public class JerseyClient {
 			case 404:reminderString="删除失败，要删除的值不存在！";break;
 			case 409:reminderString="删除失败，有关系存在，请先删除关系";break;
 			}
-			System.out.println(String.format("DELETE : [%s]  status code: [%d]",uri, status));
-			System.out.println(reminderString);
+//			System.out.println(String.format("DELETE : [%s]  status code: [%d]",uri, status));
+//			System.out.println(reminderString);
 			response.close();
 			break;
 		}

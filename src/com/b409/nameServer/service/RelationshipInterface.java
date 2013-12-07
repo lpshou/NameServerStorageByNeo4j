@@ -130,7 +130,13 @@ public interface RelationshipInterface {
 	 */
 	public String getRelationshipTypeFromUserToGroup(String userName, String groupName);
 	
-
+	/**
+	 * @Description: 得到group节点到user节点的关系id
+	 * @param userName
+	 * @param groupName
+	 * @return:关系id，不存在返回-1，存在返回关系id
+	 */
+	public Integer getRelationshipIdFromGroupToUser(String userName,String groupName);
 	//--------------------------------------------------------------------------------------------------
 	
 }

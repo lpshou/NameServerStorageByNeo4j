@@ -18,8 +18,8 @@ public class RelationshipTest {
 		List<String>labels = new ArrayList<String>();
 		labels.add("contains");
 		labels.add("friend");
-		
-		relationshipImpl.getNodeIdHaveRelationshipWithOneNode(10, "all", labels);
+		relationshipImpl.getRelationshipIdFromGroupToUser("zhangsan", "计算机1101");
+//		relationshipImpl.getNodeIdHaveRelationshipWithOneNode(10, "all", labels);
 //		relationshipImpl.getRelationshipOfNode(282, "out", labels);
 //		relationshipImpl.getAllRelationships();
 
