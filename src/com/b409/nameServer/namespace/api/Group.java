@@ -3,8 +3,6 @@ package com.b409.nameServer.namespace.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4j.cypher.internal.commands.Return;
-import org.neo4j.cypher.internal.parser.v2_0.functions.Nodes;
 
 import com.b409.nameServer.common.CommonTool;
 import com.b409.nameServer.serviceImpl.NamespaceImpl;
@@ -63,7 +61,7 @@ public class Group {
 				List<Integer> groupIds = namespace.createNodeWithProperties("Group", propsString);
 				int groupId2 = groupIds.get(0);
 				//relationship.createRelationshipBetweenTwoNode(groupId2, userId, "contains", "{}");
-				relationship.createRelationshipBetweenTwoNode(userId, groupId2, "create", "{}");
+				relationship.createRelationshipBetweenTwoNode(userId, groupId2, "create", "{\"createTime\":\""+timeString+"\"}");
 				System.out.println("创建组"+groupName+"成功");
 				return 0;
 			}
@@ -131,6 +129,8 @@ public class Group {
 			relationshipTypes.add("create");
 			
 			List<Integer>nodeIds = relationship.getNodeIdHaveRelationshipWithOneNode(groupId, "all", relationshipTypes);
+			
+//			System.out.println(nodeIds.size());
 			System.out.println("该组"+groupName+"的用户如下：");
 			for(int i=0;i<nodeIds.size();i++){
 				String userName  = namespace.getNameOfNode(nodeIds.get(i));

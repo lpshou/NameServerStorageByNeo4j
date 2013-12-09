@@ -182,7 +182,7 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 		String dataString = getPropertiesOfNode(nodeId);
 		JSONObject jsonObject = JSONObject.fromObject(dataString);
 		String resultString = jsonObject.getString("name");
-		System.out.println(resultString);
+//		System.out.println(resultString);
 		return resultString;
 	}
 	/**

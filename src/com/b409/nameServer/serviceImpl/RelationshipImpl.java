@@ -117,7 +117,19 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 		JSONArray jsonArray = JSONArray.fromObject(data);
 		for(int i=0;i<jsonArray.size();i++){
 			JSONObject jsonObject = JSONObject.fromObject(jsonArray.get(i));
-			String nodeUriString = jsonObject.getString("end");
+			String nodeUriString="";
+			if(direction.equals("out")){
+				nodeUriString = jsonObject.getString("end");
+			}else if(direction.equals("in")){
+				nodeUriString = jsonObject.getString("start");
+			}else{
+				String nodeUriTemp = CommonTool.getNodeUriFromNodeId(nodeId);
+				if(nodeUriTemp.equals(jsonObject.getString("end"))){
+					nodeUriString = jsonObject.getString("start");
+				}else{
+					nodeUriString = jsonObject.getString("end");
+				}
+			}
 			nodeIds.add(CommonTool.getNodeIdFromNodeUri(nodeUriString));
 		}
 //		for(int j=0;j<nodeIds.size();j++)
