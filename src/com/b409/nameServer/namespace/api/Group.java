@@ -12,8 +12,8 @@ public class Group {
 	//查看所有的组：public List<Integer> listAllGroup()
 	//创建一个组：public void createGroup(String groupName)
 	//解散一个组：public void deleteGroup(String groupName)
-	NamespaceImpl namespace = new NamespaceImpl();
-	RelationshipImpl relationship = new RelationshipImpl();
+	static NamespaceImpl namespace = new NamespaceImpl();
+	static RelationshipImpl relationship = new RelationshipImpl();
 	
 
 	/**
@@ -21,7 +21,7 @@ public class Group {
 	* @Description: 查看所有的组
 	* @return：所有的组 
 	 */
-	public List<Integer> listAllGroup(){
+	public static List<Integer> listAllGroup(){
 		List<Integer> groupIds = new ArrayList<Integer>();
 		groupIds = namespace.getAllNodesWithLabel("Group");
 		for(int i=0;i<groupIds.size();i++){
@@ -37,7 +37,7 @@ public class Group {
 	* @param createUserName：用户名
 	* @return：成功返回0，失败返回-1；
 	 */
-	public Integer createGroup(String groupName,String createUserName){
+	public static Integer createGroup(String groupName,String createUserName){
 		if(groupName.equals("")||createUserName.equals("")){
 			System.out.println("创建组"+groupName+"失败：组名和用户名均不能为空！");
 			return -1;
@@ -75,7 +75,7 @@ public class Group {
 	* @param userName：用户名
 	* @return：成功返回0，失败返回-1
 	 */
-	public Integer deleteGroup(String groupName,String userName){
+	public static Integer deleteGroup(String groupName,String userName){
 		if(groupName.equals("")||userName.equals("")){
 			System.out.println("解散组"+groupName+"失败：组名和用户名不能为空！");
 			return -1;
@@ -113,7 +113,7 @@ public class Group {
 	* @param groupName
 	* @return：
 	 */
-	public List<String> listAllUsersInGroup(String groupName){
+	public static List<String> listAllUsersInGroup(String groupName){
 		List<String> users = new ArrayList<String>();
 		if(groupName.equals("")){
 			System.out.println("失败：组名不能为空！");
@@ -148,7 +148,7 @@ public class Group {
 	* @param userName：
 	* @return：成功返回0，失败返回-1
 	 */
-	public Integer addUserToGroup(String groupName, String userName){
+	public static Integer addUserToGroup(String groupName, String userName){
 		if(groupName.equals("")||userName.equals("")){
 			System.out.println("加入组"+groupName+"失败：组名和用户名不能为空！");
 			return -1;
@@ -165,7 +165,7 @@ public class Group {
 			}else{
 				String timeString = CommonTool.getTime();
 				//在组和用户之间建立contains关系
-				relationship.createRelationshipBetweenTwoNode(groupId, userId, "contains", "{\"time\" : \""+timeString+"\"}");
+				relationship.createRelationshipBetweenTwoNode(groupId, userId, "contains", "{\"containsTime\" : \""+timeString+"\"}");
 				System.out.println("加入组"+groupName+"成功");
 				return 0;
 			}
@@ -179,7 +179,7 @@ public class Group {
 	* @param userName：用户名
 	* @return：
 	 */
-	public Integer deleteUserFromGroup(String groupName, String userName){
+	public static Integer deleteUserFromGroup(String groupName, String userName){
 		if(groupName.equals("")||userName.equals("")){
 			System.out.println("将用户"+userName+"从组"+groupName+"删除失败：组名和用户名不能为空！");
 			return -1;
