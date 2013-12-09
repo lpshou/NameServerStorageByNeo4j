@@ -1,5 +1,8 @@
 package com.b409.nameServer.relationship.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Friend {
 	/**
 	 * 
@@ -21,5 +24,16 @@ public class Friend {
 	 */
 	public static void unfriend(String userName1, String userName2){
 		
+	}
+	
+	/**
+	 * 
+	* @Description: 找到所有的朋友（关注的人）
+	* @param userName：
+	* @return：
+	 */
+	public static List<Integer> listAllFriends(String userName){
+		List<Integer> friendIds = new ArrayList<>();
+		return friendIds;
 	}
 }

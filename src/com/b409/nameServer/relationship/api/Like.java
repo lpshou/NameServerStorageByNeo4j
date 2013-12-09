@@ -1,5 +1,8 @@
 package com.b409.nameServer.relationship.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Like {
 	
 	/**
@@ -22,6 +25,17 @@ public class Like {
 	 */
 	public static void deleteLike(String userName, String fileName){
 		
+	}
+	
+	/**
+	 * 
+	* @Description: 列出所有喜爱的文件的id
+	* @param userName：用户名
+	* @return：
+	 */
+	public static List<Integer> listAllLikedFile(String userName){
+		List<Integer> fileIds = new ArrayList<>();
+		return fileIds;
 	}
 
 }
