@@ -18,12 +18,13 @@ public class RelationshipTest {
 		List<String>labels = new ArrayList<String>();
 		labels.add("contains");
 		labels.add("friend");
-		relationshipImpl.getRelationshipIdFromGroupToUser("zhangsan", "计算机1101");
+//		relationshipImpl.getRelationshipIdFromGroupToUser("zhangsan", "计算机1101");
 //		relationshipImpl.getNodeIdHaveRelationshipWithOneNode(10, "all", labels);
 //		relationshipImpl.getRelationshipOfNode(282, "out", labels);
 //		relationshipImpl.getAllRelationships();
 
-//		relationshipImpl.getRelationshipTypeBetweenTwoNode("liupeng", "huangshaojian");
+//		relationshipImpl.getRelationshipTypeBetweenTwoNodes("计算机1105","zhangsan");
+		relationshipImpl.getRelationshipIdBetweenTwoNodes(115, 118);
 //		relationshipImpl.updatePropertiesOnRelationship(290, "{\"rel\":\"test\"}");
 //		relationshipImpl.deletePropertiesOnRelationship(290);
 //		relationshipImpl.deleteOnePropertyOnRelationship(291, "rel");

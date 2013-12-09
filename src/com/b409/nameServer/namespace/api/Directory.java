@@ -38,12 +38,19 @@ public class Directory {
 		}else{
 			List<String> relationshipTypes = new ArrayList<>();
 			relationshipTypes.add("contains");
-			nodeIds = relationship.getNodeIdHaveRelationshipWithOneNode(parentId, "out", relationshipTypes);
-			if(nodeIds.size() == 0){
+			List<Integer>nodeIdsList = relationship.getNodeIdHaveRelationshipWithOneNode(parentId, "out", relationshipTypes);
+			if(nodeIdsList.size() == 0){
 				System.out.println(parentName+"下不包含文件夹");
+				return nodeIds;
 			}
-			for(int i=0;i<nodeIds.size();i++){
-				System.out.println(namespace.getNameOfNode(nodeIds.get(i)));
+			for(int i=0;i<nodeIdsList.size();i++){
+				int nodeId = nodeIdsList.get(i);
+				List<String>labels = namespace.listAllLabelsOfNode(nodeId);
+				if(CommonTool.existInList(labels, "Directory")){
+					nodeIds.add(nodeId);
+					String nodeNameString = namespace.getNameOfNode(nodeId);
+					System.out.println(nodeNameString);
+				}
 			}
 			return nodeIds;
 		}
@@ -117,7 +124,7 @@ public class Directory {
 	* @param parentName：用户名或文件夹名
 	* @param parentName：User、Directory,用于区分用户还是文件夹，
 	* @param directoryName：文件夹名
-	* @return：
+	* @return：成功返回0，失败返回-1
 	 */
 	public static Integer deleteDirectory(String parentName, String parentType, String directoryName){
 		if(parentName.equals("")||parentType.equals("")||directoryName.equals("")){
@@ -144,7 +151,11 @@ public class Directory {
 				System.out.println("删除成功:"+directoryName+"本来就不存在");
 				return 0;
 			}else{
-				
+				int relId = relationship.getRelationshipIdBetweenTwoNodes(parentId, nodeId);
+				relationship.deleteRelationship(relId);
+				namespace.deleteNode(nodeId);
+				System.out.println("删除成功");
+				return 0;
 			}
 		}
 	}

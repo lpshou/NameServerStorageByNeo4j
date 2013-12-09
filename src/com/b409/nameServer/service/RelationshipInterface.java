@@ -111,26 +111,24 @@ public interface RelationshipInterface {
 	 */
 	public List<String> getAllRelationships();
 	
-	
-	/**
-	 * 
-	* @Description: 得到两个User节点之间的关系，参数为节点的name值(不怎么实用，保留观察）
-	* @param nameNode1
-	* @param nameNode2
-	* @return：关系
-	 */
-	public  List<String> getRelationshipTypeBetweenTwoNode(String nameNode1,String nameNode2);
 
 	/**
 	 * 
-	* @Description: 得到两个User节点之间的关系，参数为节点的name值
+	* @Description: 得到两个节点之间的关系，参数为节点的name值
 	* @param nodeName1：第一个节点的name
 	* @param nodeName2：第二个节点的name
 	* @return：
 	 */
-	public List<String> getRelationshipTypesBetweenTwoNodes(String nodeName1, String nodeName2);
+	public String getRelationshipTypeBetweenTwoNodes(String nodeName1, String nodeName2);
 	
-	
+	/**
+	 * 
+	* @Description: 得到两个节点之间关系的id
+	* @param nodeId1
+	* @param nodeId2
+	* @return：
+	 */
+	public Integer getRelationshipIdBetweenTwoNodes(int nodeId1, int nodeId2);
 	/**
 	 * 
 	* @Description: 得到user节点到group节点之间的关系类型

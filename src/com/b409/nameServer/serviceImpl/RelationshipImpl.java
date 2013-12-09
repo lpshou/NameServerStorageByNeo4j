@@ -1,10 +1,8 @@
 package com.b409.nameServer.serviceImpl;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.MediaType;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -14,9 +12,7 @@ import com.b409.nameServer.common.Config;
 import com.b409.nameServer.common.GenerateJson;
 import com.b409.nameServer.common.JerseyClient;
 import com.b409.nameServer.service.RelationshipInterface;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+
 
 public class RelationshipImpl implements RelationshipInterface, Config {
 	
@@ -136,65 +132,61 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 //			System.out.println(nodeIds.get(j));
 		return nodeIds;
 	}
-	/**
-	 * 
-	* @Description: 得到两个User节点之间的关系，参数为节点的name值
-	* @param nameNode1
-	* @param nameNode2
-	* @return：关系
-	 */
-	public List<String> getRelationshipTypeBetweenTwoNode(String nameNode1,
-			String nameNode2) {
 
-		final String cypherUri = SERVER_ROOT_URI + "cypher";
-		String cypherString = "match (n:user) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
-		System.out.println(cypherString);
-		String cypherJson = GenerateJson.generateJsonCypherForgetRelationshipTypeBetweenTwoNode(cypherString,
-				nameNode1, nameNode2);
-		System.out.println(cypherJson);
-
-		String dataResult = JerseyClient.sendToServer(cypherUri, cypherJson, "post");
-//		String strResult = response.getEntity(String.class);
-		System.out.println(dataResult);
-		JSONObject jsonObject = JSONObject.fromObject(dataResult);
-		JSONArray array = JSONArray.fromObject(jsonObject.get("data"));
-		List<String> strList = new ArrayList<String>();
-
-		for (int i = 0; i < array.size(); i++) {
-			String strTemp = array.getString(i);
-			strList.add(strTemp);
-		}
-		return strList;
-	}
-	
 	
 	/**
 	 * 
-	* @Description: 得到两个User节点之间的关系，参数为节点的name值
+	* @Description: 得到两个节点之间的关系，参数为节点的name值
 	* @param nodeName1：第一个节点的name
 	* @param nodeName2：第二个节点的name
 	* @return：
 	 */
-	public List<String> getRelationshipTypesBetweenTwoNodes(String nodeName1, String nodeName2){
+	public String getRelationshipTypeBetweenTwoNodes(String nodeName1, String nodeName2){
 		final String cypherUri = SERVER_ROOT_URI + "cypher";
-		String cypherString = "match (n:user) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
-		System.out.println(cypherString);
+		String cypherString = "start n=node(*) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
+//		System.out.println(cypherString);
 		String cypherJson = GenerateJson.generateJsonCypherForgetRelationshipTypeBetweenTwoNode(cypherString,
 				nodeName1, nodeName2);
-		System.out.println(cypherJson);
+//		System.out.println(cypherJson);
 
 		String dataResult = JerseyClient.sendToServer(cypherUri, cypherJson, "post");
 //		String strResult = response.getEntity(String.class);
-		System.out.println(dataResult);
 		JSONObject jsonObject = JSONObject.fromObject(dataResult);
-		JSONArray array = JSONArray.fromObject(jsonObject.get("data"));
-		List<String> strList = new ArrayList<String>();
-
-		for (int i = 0; i < array.size(); i++) {
-			String strTemp = array.getString(i);
-			strList.add(strTemp);
+		JSONArray jsonArray = JSONArray.fromObject(jsonObject.get("data"));
+		if(jsonArray.size() == 0){
+			//System.out.println("用户"+userName+"到组"+groupName+"不存在关系");
+			return "";
+		}else{
+			JSONArray jsonArray2 = JSONArray.fromObject(jsonArray.get(0));
+			JSONObject jsonObject2 = JSONObject.fromObject(jsonArray2.get(0));
+			String strTempString = jsonObject2.getString("type");
+			System.out.println(strTempString);
+			return strTempString;
 		}
-		return strList;
+	}
+	
+	public Integer getRelationshipIdBetweenTwoNodes(int nodeId1, int nodeId2){
+		final String cypherUri = SERVER_ROOT_URI + "cypher";
+		String cypherString = "start n=node({nodeId1}),m=node({nodeId2}) match n-[rel]-m return rel";
+//		System.out.println(cypherString);
+		String cypherJson = GenerateJson.generateJsonForgetRelationshipIdBetweenTwoNodes(cypherString, nodeId1, nodeId2);
+//		System.out.println(cypherJson);
+
+		String dataResult = JerseyClient.sendToServer(cypherUri, cypherJson, "post");
+//		String strResult = response.getEntity(String.class);
+		JSONObject jsonObject = JSONObject.fromObject(dataResult);
+		JSONArray jsonArray = JSONArray.fromObject(jsonObject.get("data"));
+		if(jsonArray.size() == 0){
+			//System.out.println("用户"+userName+"到组"+groupName+"不存在关系");
+			return -1;
+		}else{
+			JSONArray jsonArray2 = JSONArray.fromObject(jsonArray.get(0));
+			JSONObject jsonObject2 = JSONObject.fromObject(jsonArray2.get(0));
+			String strTempString = jsonObject2.getString("self");
+			int nodeId = CommonTool.getNodeIdFromNodeUri(strTempString);
+			System.out.println(nodeId);
+			return nodeId;
+		}
 	}
 	/**
 	 * 

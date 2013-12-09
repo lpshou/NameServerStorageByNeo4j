@@ -2,6 +2,7 @@ package com.b409.nameServer.common;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -16,6 +17,17 @@ public class CommonTool implements Config{
 		return df.format(new Date());// new Date()为获取当前系统时间
 	}
 	
+	//某个label在一个list中存在
+	public static boolean existInList(List<String>labels, String label){
+		boolean flag = false;
+		for(int i=0;i<labels.size();i++){
+			if(label.equals(labels.get(i))){
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
 	//由关系的uri得到节点id
 	public static int getRelationshipIdFromRelationshipUri(String relationshipUri){
 		int i = relationshipUri.lastIndexOf("/");

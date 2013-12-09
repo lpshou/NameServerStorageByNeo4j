@@ -99,6 +99,18 @@ public class GenerateJson {
 		return sb.toString();
 	}
 
+	//获得两个节点之间关系的id
+	public static String generateJsonForgetRelationshipIdBetweenTwoNodes(String cypherString, int nodeId1, int nodeId2){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{ \"query\" : \"");
+		sb.append(cypherString);
+		sb.append("\", \"params\" : { \"nodeId1\" : ");
+		sb.append(nodeId1);
+		sb.append(", \"nodeId2\" : ");
+		sb.append(nodeId2);
+		sb.append(" } }");
+		return sb.toString();
+	}
 	public static String generateJsonTransaction(String transactionUri) {
 
 		StringBuilder sb = new StringBuilder();

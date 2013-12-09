@@ -294,7 +294,7 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 		 */
 		public List<String> listAllLabelsOfNode(int nodeId){
 			String nodeUri = SERVER_ROOT_URI+"node/"+nodeId+"/labels";
-			System.out.println(nodeUri);
+//			System.out.println(nodeUri);
 			String labels = JerseyClient.sendToServer(nodeUri, "{}", "get");
 //			System.out.println(labels);
 			
@@ -304,8 +304,8 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 				labelsList.add(jsonArray.getString(i));
 			}
 			
-			for(int i=0;i<labelsList.size();i++)
-				System.out.println(labelsList.get(i));
+//			for(int i=0;i<labelsList.size();i++)
+//				System.out.println(labelsList.get(i));
 			return labelsList;
 		}
 		
