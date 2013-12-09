@@ -185,6 +185,20 @@ public class NamespaceImpl implements NamespaceInterface,Config {
 //		System.out.println(resultString);
 		return resultString;
 	}
+	
+	/**
+	 * 
+	* @Description: 根据节点id获得fileLocation
+	* @param nodeId：节点id
+	* @return：
+	 */
+	public String getFileLocationOfNode(int nodeId){
+		String dataString = getPropertiesOfNode(nodeId);
+		JSONObject jsonObject = JSONObject.fromObject(dataString);
+		String resultString = jsonObject.getString("fileLocation");
+//		System.out.println(resultString);
+		return resultString;
+	}
 	/**
 	 * 
 	* @Description: 删除一个节点的所有属性

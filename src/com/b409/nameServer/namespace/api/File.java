@@ -108,10 +108,87 @@ public class File {
 	* @param parentName：用户名或文件夹名
 	* @param parentType：User、Directory,用于区分用户还是文件夹，
 	* @param fileName：要删除的文件名
+	* @return：成功返回0，失败返回-1
+	 */
+	public static Integer deleteFile(String parentName, String parentType, String fileName){
+		if(parentName.equals("")||parentType.equals("")||fileName.equals("")){
+			System.out.println("参数不能为空！");
+			return -1;
+		}
+		String timeString = CommonTool.getTime();
+		int parentId =-1;
+		//parentName类型
+		switch(parentType.toUpperCase()){
+		case "USER":parentId = namespace.getNodeWithLabelAndProperty("User", "name", parentName);break;
+		case "DIRECTORY":parentId = namespace.getNodeWithLabelAndProperty("Directory", "name", parentName);break;
+		default:System.out.println("参数type的类型不正确");
+		}
+		//parentName是否存在
+		if(parentId == -1){
+			System.out.println("失败: "+parentName+"不存在");
+			return -1;
+		}else{
+			int nodeId = namespace.getNodeWithLabelAndProperty("File", "name", fileName);
+			
+			//parentName下面存在名为directoryName的文件夹
+			if(nodeId == -1){
+				System.out.println("删除成功:"+fileName+"本来就不存在");
+				return 0;
+			}else{
+				int relId = relationship.getRelationshipIdBetweenTwoNodes(parentId, nodeId);
+				relationship.deleteRelationship(relId);
+				namespace.deleteNode(nodeId);
+				System.out.println("删除成功");
+				return 0;
+			}
+		}
+	}
+	
+	/**
+	 * 
+	* @Description: 获得文件存放位置的md5值
+	* @param fileName：文件名
 	* @return：
 	 */
-	public static void deleteFile(String parentName, String parentType, String fileName){
-		
+	public static String getFileLocation(String fileName){
+		if(fileName.equals("")){
+			System.out.println("文件名不能为空");
+			return "";
+		}
+		int nodeId = namespace.getNodeWithLabelAndProperty("File", "name", fileName);
+		if(nodeId == -1){
+			System.out.println("文件名为"+fileName+"的文件不存在");
+			return "";
+		}else{
+			String fileLocation = namespace.getFileLocationOfNode(nodeId);
+			System.out.println("文件位置为："+fileLocation);
+			return fileLocation;
+		}
 	}
+	
+	/**
+	 * 
+	* @Description: 更新文件存放位置
+	* @param fileName：文件名
+	* @param fileLocation：文件存放位置
+	* @return：
+	 */
+	public static Integer updateFileLocation(String fileName, String fileLocation){
+		if(fileName.equals("")){
+			System.out.println("文件名不能为空");
+			return -1;
+		}
+		int nodeId = namespace.getNodeWithLabelAndProperty("File", "name", fileName);
+		if(nodeId == -1){
+			System.out.println("文件名为"+fileName+"的文件不存在");
+			return -1;
+		}else{
+			String nodeUri = CommonTool.getNodeUriFromNodeId(nodeId);
+			namespace.updateOnePropertyOnNode(nodeUri, "fileLocation", fileLocation);
+			System.out.println("更新成功");
+			return 0;
+		}
+	}
+	
 
 }

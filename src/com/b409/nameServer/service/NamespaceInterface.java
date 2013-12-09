@@ -75,6 +75,14 @@ public interface NamespaceInterface {
 	* @return：
 	 */
 	public String getNameOfNode(int nodeId);
+	
+	/**
+	 * 
+	* @Description: 根据节点id获得fileLocation
+	* @param nodeId：节点id
+	* @return：
+	 */
+	public String getFileLocationOfNode(int nodeId);
 
 	/**
 	 * 

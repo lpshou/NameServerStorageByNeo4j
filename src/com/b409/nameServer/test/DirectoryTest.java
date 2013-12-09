@@ -12,7 +12,7 @@ public class DirectoryTest {
 //		Directory.deleteDirectory("wangwu", "user", "骑行");
 //		Directory.createDirectory("摄影", "Directory", "三峡风景");
 //		
-		Directory.listAllDirectories("摄影", "Directory");
+//		Directory.listAllDirectories("摄影", "Directory");
 		long time = System.currentTimeMillis() - start;
 		System.out.println("运行耗时= "+time+" 毫秒");
 	}

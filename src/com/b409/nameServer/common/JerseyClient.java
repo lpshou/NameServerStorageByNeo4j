@@ -77,7 +77,7 @@ public class JerseyClient {
 		case "put": {
 			boolean flag = false;
 			flag = jsonString.contains("{")||jsonString.contains("[");
-			System.out.println(flag);
+//			System.out.println(flag);
 			if(flag){
 				response = resource
 						.accept(MediaType.APPLICATION_JSON)
@@ -97,8 +97,8 @@ public class JerseyClient {
 			case 400:reminderString="失败";break;
 			case 204:reminderString="成功";break;
 			}
-			System.out.println(String.format("PUT : [%s]  status code: [%d]",uri, status));
-			System.out.println(reminderString);
+//			System.out.println(String.format("PUT : [%s]  status code: [%d]",uri, status));
+//			System.out.println(reminderString);
 			//dataString = response.getEntity(String.class);
 			response.close();
 			break;
