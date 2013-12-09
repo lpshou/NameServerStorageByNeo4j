@@ -138,7 +138,7 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 	}
 	/**
 	 * 
-	* @Description: 得到两个节点之间的关系，参数为节点的name值
+	* @Description: 得到两个User节点之间的关系，参数为节点的name值
 	* @param nameNode1
 	* @param nameNode2
 	* @return：关系
@@ -167,6 +167,35 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 		return strList;
 	}
 	
+	
+	/**
+	 * 
+	* @Description: 得到两个User节点之间的关系，参数为节点的name值
+	* @param nodeName1：第一个节点的name
+	* @param nodeName2：第二个节点的name
+	* @return：
+	 */
+	public List<String> getRelationshipTypesBetweenTwoNodes(String nodeName1, String nodeName2){
+		final String cypherUri = SERVER_ROOT_URI + "cypher";
+		String cypherString = "match (n:user) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
+		System.out.println(cypherString);
+		String cypherJson = GenerateJson.generateJsonCypherForgetRelationshipTypeBetweenTwoNode(cypherString,
+				nodeName1, nodeName2);
+		System.out.println(cypherJson);
+
+		String dataResult = JerseyClient.sendToServer(cypherUri, cypherJson, "post");
+//		String strResult = response.getEntity(String.class);
+		System.out.println(dataResult);
+		JSONObject jsonObject = JSONObject.fromObject(dataResult);
+		JSONArray array = JSONArray.fromObject(jsonObject.get("data"));
+		List<String> strList = new ArrayList<String>();
+
+		for (int i = 0; i < array.size(); i++) {
+			String strTemp = array.getString(i);
+			strList.add(strTemp);
+		}
+		return strList;
+	}
 	/**
 	 * 
 	* @Description: 得到user节点到group节点之间的关系类型
