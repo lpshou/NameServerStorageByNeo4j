@@ -24,9 +24,7 @@ public class GenerateJson {
 		sb.append("\", \"data\" : ");
 		sb.append(relationshipData);
 		sb.append("}");
-		
 		return sb.toString();	
-		
 	}
 
 	// 获取节点属性的json串
@@ -38,7 +36,6 @@ public class GenerateJson {
 		sb.append("\"id\" : ");
 		sb.append(id);
 		sb.append("}}");
-
 		return sb.toString();
 	}
 
@@ -143,7 +140,6 @@ public class GenerateJson {
 				}
 			}
 		}
-
 		sb.append(" }");
 		return sb.toString();
 	}

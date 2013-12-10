@@ -13,7 +13,7 @@ public class JerseyClient {
 	* @Description: client发送请求
 	* @param uri：请求目的地址
 	* @param jsonString：请求中的参数
-	* @param typeString：请求类型，get、put、post、delete
+	* @param typeString：请求类型eg:get、put、post、delete
 	* @return： String    返回值
 	 */
 	public static String sendToServer(String uri, String jsonString,
@@ -120,7 +120,6 @@ public class JerseyClient {
 			break;
 		}
 		}
-		
 		//System.out.println(String.format("Send to: [%s]  status code: [%d]",uri, status));
 		return dataString;
 

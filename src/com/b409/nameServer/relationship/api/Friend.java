@@ -89,7 +89,7 @@ public class Friend {
 		}else {
 			List<String>relationshipTypes = new ArrayList<>();
 			relationshipTypes.add("friend");
-			friendIds = relationship.getNodeIdHaveRelationshipWithOneNode(userId, "out", relationshipTypes);
+			friendIds = relationship.getNodeIdsHaveRelationshipWithOneNode(userId, "out", relationshipTypes);
 			if(friendIds.size() == 0){
 				System.out.println("该用户与其他任何用户建立朋友关系");
 				return friendIds;

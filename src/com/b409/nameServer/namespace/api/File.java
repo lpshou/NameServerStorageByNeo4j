@@ -37,7 +37,7 @@ public class File {
 		}else{
 			List<String> relationshipTypes = new ArrayList<>();
 			relationshipTypes.add("contains");
-			List<Integer>nodeIdsList = relationship.getNodeIdHaveRelationshipWithOneNode(parentId, "out", relationshipTypes);
+			List<Integer>nodeIdsList = relationship.getNodeIdsHaveRelationshipWithOneNode(parentId, "out", relationshipTypes);
 			if(nodeIdsList.size() == 0){
 				System.out.println(parentName+"下不包含文件夹");
 				return nodeIds;

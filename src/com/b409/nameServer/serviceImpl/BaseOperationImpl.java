@@ -20,7 +20,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class baseOperationImpl implements BaseOperationInterface,Config {
+public class BaseOperationImpl implements BaseOperationInterface,Config {
 
 	// 测试数据库是否正常运行（get）
 	public boolean databaseIsRunning() {

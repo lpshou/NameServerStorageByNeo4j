@@ -16,7 +16,7 @@ public interface NamespaceInterface {
 	/**
 	 * 
 	* @Description: 删除一个节点
-	* @param nodeId：
+	* @param nodeId:节点id
 	* @return：
 	 */
 	public void deleteNode(int nodeId);
@@ -24,8 +24,8 @@ public interface NamespaceInterface {
 	/**
 	 * 
 	* @Description: 获取具有某个label的所有node
-	* @param label
-	* @return：
+	* @param label:label名
+	* @return：节点id
 	 */
 	public List<Integer> getAllNodesWithLabel(String label);
 	
@@ -52,6 +52,7 @@ public interface NamespaceInterface {
 	* @return：节点的信息，为json串
 	 */
 	public String getMessageOfNode(int nodeId);
+
 	/**
 	 * 
 	* @Description: 获取节点具体属性
@@ -59,6 +60,7 @@ public interface NamespaceInterface {
 	* @return：返回值为json串形式（属性：属性值）
 	 */
 	public String getPropertiesOfNode(int nodeId);
+	
 	/**
 	 * 
 	* @Description: 获取节点有哪些属性
@@ -119,13 +121,14 @@ public interface NamespaceInterface {
 	public void deleteOnePropertyOnNode(int nodeId,String propertyName);
 	//----------------------------------------------------------------------------------
 	
+	
 
 	//节点label的相关操作
 	//--------------------------------------------------------------------------------
 	/**
 	 * 
 	* @Description: 给节点增加labels
-	* @param nodeId
+	* @param nodeId：节点id
 	* @param labels：要增加的labels,
 	* @return：
 	 */
@@ -164,9 +167,6 @@ public interface NamespaceInterface {
 	* @return：
 	 */
 	public List<String> listAllLabelsInGraph();
-	
-
-	
 	//--------------------------------------------------------------------------------
 	
 	
@@ -199,7 +199,6 @@ public interface NamespaceInterface {
 	* @return：
 	 */
 	public void CreateOneIndexOnLabel(String labelName, String indexName);
-	
 	
 	//--------------------------------------------------------------------------------
 	

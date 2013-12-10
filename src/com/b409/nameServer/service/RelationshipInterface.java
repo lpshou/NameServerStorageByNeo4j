@@ -4,6 +4,7 @@ import java.util.List;
 
 
 public interface RelationshipInterface {
+	
 	//创建关系
 	//-------------------------------------------------------------------------------------
 	/**
@@ -19,68 +20,6 @@ public interface RelationshipInterface {
 			String relationshipType, String relationshipData);
 	//---------------------------------------------------------------------------------------
 
-	
-	//更新关系
-	//---------------------------------------------------------------------------------------
-	/**
-	 * 
-	* @Description: 更新一个关系的属性
-	* @param relationshipId
-	* @param props：json串eg："{\"rel\":\"test\"}"
-	* @return：
-	 */
-	public void updatePropertiesOnRelationship(int relationshipId,String props);
-	//---------------------------------------------------------------------------------------
-	
-	//删除关系
-	//---------------------------------------------------------------------------------------
-	/**
-	 * 
-	* @Description: 删除一个关系
-	* @param relationshipId：
-	* @return：
-	 */
-	public void deleteRelationship(int relationshipId);
-	
-	/**
-	 * 
-	* @Description: 删除一个节点的某种关系
-	* @param nodeId：节点id
-	* @param direction：关系方向，有all、in、out三种
-	* @param relationshipTypes：关系类型，有contains、friend、like、create四种
-	* @return：
-	 */
-	public void deleteRelationshipOfNode(int nodeId,String direction, List<String>relationshipTypes);
-	//---------------------------------------------------------------------------------------
-	
-	
-	
-	//删除关系的属性
-	//---------------------------------------------------------------------------------------
-	/**
-	 * 
-	* @Description: 删除一个关系上的所有属性
-	* @param relationshipId：
-	* @return：
-	 */
-	public void deletePropertiesOnRelationship(int relationshipId);
-	
-
-	/**
-	 * 
-	* @Description: 删除一个关系上的某个属性
-	* @param relationshipId
-	* @param propertyName
-	* @return：
-	 */
-	public void deleteOnePropertyOnRelationship(int relationshipId,String propertyName);
-	
-	
-	
-	//---------------------------------------------------------------------------------------
-	
-	
-	
 	//查询关系
 	//--------------------------------------------------------------------------------------------------
 	/**
@@ -102,7 +41,7 @@ public interface RelationshipInterface {
 	* @param relationshipTypes：具体关系，放入list中
 	* @return：所有节点的ids
 	 */
-	public List<Integer> getNodeIdHaveRelationshipWithOneNode(int nodeId,String direction,List<String>relationshipTypes);
+	public List<Integer> getNodeIdsHaveRelationshipWithOneNode(int nodeId,String direction,List<String>relationshipTypes);
 
 	/**
 	 * 
@@ -146,5 +85,66 @@ public interface RelationshipInterface {
 	 */
 	public Integer getRelationshipIdFromGroupToUser(String userName,String groupName);
 	//--------------------------------------------------------------------------------------------------
+	
+	
+	//更新关系的属性
+	//---------------------------------------------------------------------------------------
+	/**
+	 * 
+	* @Description: 更新一个关系的属性
+	* @param relationshipId
+	* @param props：json串eg："{\"rel\":\"test\"}"
+	* @return：
+	 */
+	public void updatePropertiesOnRelationship(int relationshipId,String props);
+	//---------------------------------------------------------------------------------------
+	
+	
+	//删除关系
+	//---------------------------------------------------------------------------------------
+	/**
+	 * 
+	* @Description: 删除一个关系
+	* @param relationshipId：关系id
+	* @return：
+	 */
+	public void deleteRelationship(int relationshipId);
+	
+	/**
+	 * 
+	* @Description: 删除一个节点的某种关系
+	* @param nodeId：节点id
+	* @param direction：关系方向，有all、in、out三种
+	* @param relationshipTypes：关系类型，有contains、friend、like、create四种
+	* @return：
+	 */
+	public void deleteRelationshipOfNode(int nodeId,String direction, List<String>relationshipTypes);
+	//---------------------------------------------------------------------------------------
+	
+	
+	
+	//删除关系的属性
+	//---------------------------------------------------------------------------------------
+	/**
+	 * 
+	* @Description: 删除一个关系上的所有属性
+	* @param relationshipId：
+	* @return：
+	 */
+	public void deletePropertiesOnRelationship(int relationshipId);
+	
+
+	/**
+	 * 
+	* @Description: 删除一个关系上的某个属性
+	* @param relationshipId
+	* @param propertyName
+	* @return：
+	 */
+	public void deleteOnePropertyOnRelationship(int relationshipId,String propertyName);
+	
+	//---------------------------------------------------------------------------------------
+	
+	
 	
 }

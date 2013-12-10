@@ -5,7 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import com.b409.nameServer.serviceImpl.baseOperationImpl;
+import com.b409.nameServer.serviceImpl.BaseOperationImpl;
 import com.b409.nameServer.serviceImpl.RelationshipImpl;
 
 
@@ -14,7 +14,7 @@ public class Test {
 
 	public static void main(String[] args) throws URISyntaxException {
 //		System.out.println("hah");
-		baseOperationImpl operation = new baseOperationImpl();
+		BaseOperationImpl operation = new BaseOperationImpl();
 
 //		operation.beginAndCommitTransaction("create (n) return id(n)");
 //		operationForRelationshipImpl relationship = new operationForRelationshipImpl();

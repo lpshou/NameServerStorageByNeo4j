@@ -128,7 +128,7 @@ public class Group {
 			relationshipTypes.add("contains");
 			relationshipTypes.add("create");
 			
-			List<Integer>nodeIds = relationship.getNodeIdHaveRelationshipWithOneNode(groupId, "all", relationshipTypes);
+			List<Integer>nodeIds = relationship.getNodeIdsHaveRelationshipWithOneNode(groupId, "all", relationshipTypes);
 			
 //			System.out.println(nodeIds.size());
 			System.out.println("该组"+groupName+"的用户如下：");

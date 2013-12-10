@@ -99,7 +99,7 @@ public class Like {
 		}else {
 			List<String>relationshipTypes = new ArrayList<>();
 			relationshipTypes.add("like");
-			fileIds = relationship.getNodeIdHaveRelationshipWithOneNode(userId, "out", relationshipTypes);
+			fileIds = relationship.getNodeIdsHaveRelationshipWithOneNode(userId, "out", relationshipTypes);
 			if(fileIds.size() == 0){
 				System.out.println("该用户与其他任何用户建立朋友关系");
 				return fileIds;
