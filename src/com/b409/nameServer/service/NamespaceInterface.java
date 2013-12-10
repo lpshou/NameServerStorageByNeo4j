@@ -7,12 +7,12 @@ public interface NamespaceInterface {
 	//节点的相关操作
 	//--------------------------------------------------------------------------------
 	/**
-	* @Description: 创建节点（可以创建一个或多个节点比如，多个节点参数：("User", "[{},{}]"); 一个节点参数：("user", "{}")）
+	* @Description: 创建节点(一个节点参数：("user", "{}")  )
 	* @param label：节点的label
 	* @param props：属性值props为json串eg：{"a":"b"}，可以为空eg：{}
-	* @return	  ：返回值为创建的节点的id，一个节点参数时，返回一个节点id；多个节点参数时，返回多个节点id
+	* @return	  ：返回值为创建的节点的id
 	 */
-	public List<Integer> createNodeWithProperties(String label, String props);
+	public Integer createNodeWithProperties(String label, String props);
 	/**
 	 * 
 	* @Description: 删除一个节点

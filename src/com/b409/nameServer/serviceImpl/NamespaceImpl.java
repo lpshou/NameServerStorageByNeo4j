@@ -19,15 +19,12 @@ public class NamespaceImpl implements NamespaceInterface, Config {
 	// 节点相关操作
 	// -----------------------------------------------------------------------------------------------------------------------
 	/**
-	 * @Description: 创建节点（可以创建一个或多个节点比如，多个节点参数：("User", "[{},{}]");
-	 *               一个节点参数：("user", "{}")）
-	 * @param label
-	 *            ：节点的label
-	 * @param props
-	 *            ：属性值props为json串eg：{"a":"b"}，可以为空eg：{}
-	 * @return：返回值为创建的节点的id，一个节点参数时，返回一个节点id；多个节点参数时，返回多个节点id
+	* @Description: 创建节点(一个节点参数：("user", "{}")  )
+	* @param label：节点的label
+	* @param props：属性值props为json串eg：{"a":"b"}，可以为空eg：{}
+	* @return	  ：返回值为创建的节点的id
 	 */
-	public List<Integer> createNodeWithProperties(String label, String props) {
+	public Integer createNodeWithProperties(String label, String props) {
 		final String uri = SERVER_ROOT_URI + "cypher";
 		String jsonString = "";
 		switch (label.toUpperCase()) {
@@ -51,21 +48,15 @@ public class NamespaceImpl implements NamespaceInterface, Config {
 		String data = JerseyClient.sendToServer(uri, jsonString, "post");
 
 		// 解析返回值，获得新创建的节点的URI
-		List<Integer> ids = new ArrayList<Integer>();
 		JSONObject jsonObject = JSONObject.fromObject(data);
 		JSONArray jsonArray = JSONArray.fromObject(jsonObject.get("data"));
 		// System.out.println(jsonArray);
-		for (int i = 0; i < jsonArray.size(); i++) {
-			JSONArray jsonArray2 = JSONArray.fromObject(jsonArray.get(i));
-			// System.out.println("jsonArray2:"+jsonArray2);
-			JSONObject jsonObject2 = JSONObject.fromObject(jsonArray2.get(0));
-			String uriTemp = jsonObject2.getString("self");
-			int id = CommonTool.getNodeIdFromNodeUri(uriTemp);
-			ids.add(id);
-		}
-		// for(int j=0;j<uris.size();j++)
-		// System.out.println(uris.get(j));
-		return ids;
+		JSONArray jsonArray2 = JSONArray.fromObject(jsonArray.get(0));
+		JSONObject  jsonObject2 = JSONObject.fromObject(jsonArray2.get(0));
+		String nodeUri = jsonObject2.getString("self");
+		int nodeId = CommonTool.getNodeIdFromNodeUri(nodeUri);
+//		System.out.println("新创建节点的id为："+nodeId);
+		return nodeId;
 	}
 
 	/**
@@ -205,7 +196,6 @@ public class NamespaceImpl implements NamespaceInterface, Config {
 		String dataString = getPropertiesOfNode(nodeId);
 		JSONObject jsonObject = JSONObject.fromObject(dataString);
 		String resultString = jsonObject.getString("name");
-		// System.out.println(resultString);
 		return resultString;
 	}
 
