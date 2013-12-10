@@ -66,6 +66,7 @@ public class Group {
 			String propsString = "{\"name\": \"" + groupName +
 					"\", \"displayName\": \"" + groupName +
 					"\", \"createTime\": \"" + timeString +
+					"\", \"acl\": \"" + "public" +
 					"\", \"createUserName\": \"" + createUserName+"\"}";
 			int newGroupId = namespace.createNodeWithProperties("Group", propsString);
 			//建立创建者和组之间的关系

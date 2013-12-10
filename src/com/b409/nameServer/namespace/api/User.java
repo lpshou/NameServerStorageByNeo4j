@@ -36,6 +36,7 @@ public class User {
 		//用户不存在
 		String propsString =  "{\"name\": \"" + userName +
 				"\", \"displayName\": \"" + userName + 
+				"\", \"acl\": \"" + "public" +
 				"\", \"createTime\": \"" + timeString + "\"}";
 		namespace.createNodeWithProperties("User", propsString);
 		System.out.println("创建用户"+userName+"成功");

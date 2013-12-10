@@ -192,7 +192,7 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 			JSONObject jsonObject2 = JSONObject.fromObject(jsonArray2.get(0));
 			String strTempString = jsonObject2.getString("self");
 			int nodeId = CommonTool.getNodeIdFromNodeUri(strTempString);
-			System.out.println(nodeId);
+//			System.out.println(nodeId);
 			return nodeId;
 		}
 	}
