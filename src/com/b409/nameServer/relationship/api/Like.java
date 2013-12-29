@@ -10,6 +10,44 @@ import com.b409.nameServer.serviceImpl.RelationshipImpl;
 public class Like {
 	static NamespaceImpl namespace = new NamespaceImpl();
 	static RelationshipImpl relationship = new RelationshipImpl();
+	
+
+	/**
+	 * 
+	* @Description: 查询用户节点和文件节点之间的关系
+	* @param userName
+	* @param fileName
+	* @return：
+	* @return：
+	 */
+	public static String queryLike(String userName, String fileName){
+		if(userName.equals("")|| fileName.equals("")){
+			System.out.println("参数不能为空");
+			return "";
+		}
+		String timeString = CommonTool.getTime();
+		int userNodeId = namespace.getNodeWithLabelAndProperty("User", "name", userName);
+		int fileNodeId = namespace.getNodeWithLabelAndProperty("File", "name", fileName);
+		System.out.println("userNodeId:"+userNodeId);
+		System.out.println("fileNodeId:"+fileNodeId);
+		if(userNodeId == -1){
+			System.out.println("用户"+userName+"不存在");
+			return "";
+		}
+		if(fileNodeId == -1){
+			System.out.println("文件"+fileName+"不存在");
+			return "";
+		}
+		
+		String likeProperties =  relationship.getRelationshipBetweenTwoNodes(userName, fileName);
+		if(likeProperties.equals("")){
+			System.out.println("两者之间不存在喜好关系");
+		}else{
+			System.out.println(likeProperties);
+		}
+		return likeProperties;
+	}
+	
 	/**
 	 * 
 	* @Description: 建立用户对某个文件的喜爱
@@ -25,12 +63,14 @@ public class Like {
 		String timeString = CommonTool.getTime();
 		int userNodeId = namespace.getNodeWithLabelAndProperty("User", "name", userName);
 		int fileNodeId = namespace.getNodeWithLabelAndProperty("File", "name", fileName);
+		System.out.println("userNodeId:"+userNodeId);
+		System.out.println("fileNodeId:"+fileNodeId);
 		if(userNodeId == -1){
 			System.out.println("用户"+userName+"不存在");
 			return -1;
 		}
 		if(fileNodeId == -1){
-			System.out.println("文件"+fileNodeId+"不存在");
+			System.out.println("文件"+fileName+"不存在");
 			return -1;
 		}
 		int relationshipId = relationship.getRelationshipIdBetweenTwoNodes(userNodeId, fileNodeId);

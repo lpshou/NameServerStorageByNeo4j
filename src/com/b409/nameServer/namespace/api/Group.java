@@ -66,8 +66,10 @@ public class Group {
 			String propsString = "{\"name\": \"" + groupName +
 					"\", \"displayName\": \"" + groupName +
 					"\", \"createTime\": \"" + timeString +
-					"\", \"acl\": \"" + "public" +
-					"\", \"createUserName\": \"" + createUserName+"\"}";
+					"\", \"acl\": \"" + "Tips:你可以根据需求设定" +
+					"\", \"createUserName\": \"" + createUserName+
+					"\", \"other\": \"" + "其他属性"+
+					"\"}";
 			int newGroupId = namespace.createNodeWithProperties("Group", propsString);
 			//建立创建者和组之间的关系
 			String nowTimeString = "{\"createTime\": \"" + timeString + "\"}";
@@ -157,7 +159,66 @@ public class Group {
 		}
 		System.out.println();
 		return users;
-
 	}
+	
+	/**
+	 * 
+	* @Description: 查询群组属性
+	* @param groupName
+	* @return：
+	* @return：
+	 */
+	public static String queryGroupProperty(String groupName){
+		//判断参数
+		if(groupName.equals("")){
+			System.out.println("失败：组名不能为空！");
+			return "";
+		}
+		//判断组是否存在
+		int groupId = namespace.getNodeWithLabelAndProperty("Group", "name", groupName);
+		if(groupId == -1){
+			System.out.println("失败：该组"+groupName+"不存在");
+			return "";
+		}
+		String groupPropertieString = namespace.getPropertiesOfNode(groupId);
+		System.out.println(groupPropertieString);
+		return groupPropertieString;
+	}
+	
 
+	/**
+	 * 
+	* @Description: 更新群组属性
+	* @param groupName
+	* @return：
+	* @return：
+	 */
+	public static String updateGroupProperty(String groupName,String props){
+		//判断参数
+		if(groupName.equals("")){
+			System.out.println("失败：组名不能为空！");
+			return "";
+		}
+		//判断组是否存在
+		int groupId = namespace.getNodeWithLabelAndProperty("Group", "name", groupName);
+		if(groupId == -1){
+			System.out.println("失败：该组"+groupName+"不存在");
+			return "";
+		}
+		String timeString = CommonTool.getTime();
+		String propsString="";
+		if(props.equals("")){
+			propsString = "{\"name\": \"" + groupName +
+					"\", \"displayName\": \"" + groupName +
+					"\", \"createTime\": \"" + timeString +
+					"\", \"acl\": \"" + "Tips:你可以根据需求设定" +
+					"\", \"other\": \"" + "测试更新属性"+
+					"\"}";
+			
+		}else{
+			propsString = props;
+		}
+		namespace.setAllPropertiesOnNode(groupId, propsString);
+		return "success";
+	}
 }

@@ -103,7 +103,8 @@ public class Directory {
 //		方法2：
 		//parentName是否存在名为directoryName的文件夹
 		//实际上这里是查询节点的name属性，name = parentName+"_"+directoryName
-		String name = parentName+"_"+directoryName;
+//		String name = parentName+"_"+directoryName;
+		String name = directoryName;
 		int nodeId = namespace.getNodeWithLabelAndProperty("Directory", "name", name);
 		//parentName已经存在名为directoryName的文件夹
 		if(nodeId != -1){
@@ -114,8 +115,10 @@ public class Directory {
 		String directoryNameString = parentName+"_"+directoryName;
 		String propsString = "{\"name\": \"" + directoryNameString +
 				"\",\"displayName\": \"" + directoryName +
-					"\", \"acl\": \"" + "public" +
-				"\",\"createTime\": \"" + timeString + "\"}";
+					"\", \"acl\": \"" + "Tips:你可以根据需求设定" +
+				"\",\"createTime\": \"" + timeString + 
+				"\", \"other\": \"" + "其他属性"+
+				"\"}";
 		//创建名为directoryName的文件夹
 		int directoryId = namespace.createNodeWithProperties("Directory", propsString);
 		//在parentName和directoryName之间建立关系

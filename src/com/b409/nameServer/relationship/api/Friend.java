@@ -10,6 +10,35 @@ import com.b409.nameServer.serviceImpl.RelationshipImpl;
 public class Friend {
 	static NamespaceImpl namespace = new NamespaceImpl();
 	static RelationshipImpl relationship = new RelationshipImpl();
+	
+	/**
+	 * 
+	* @Description: 查询两个用户之间的好友关系
+	* @param userName1
+	* @param userName2
+	* @return：
+	* @return：
+	 */
+	public static String queryFriends(String userName1, String userName2){
+		if(userName1.equals("")||userName2.equals("")){
+				System.out.println("参数不能为空");
+				return "";
+		}
+		String timeString = CommonTool.getTime();
+		int userId1 = namespace.getNodeWithLabelAndProperty("User", "name", userName1);
+		int userId2 = namespace.getNodeWithLabelAndProperty("User", "name", userName2);
+		if(userId1 == -1 || userId2 == -1){
+			System.out.println(userName1+"和"+userName2+"中某个用户不存在");
+			return "";
+		}
+		String relationshipProperties =  relationship.getRelationshipTypeBetweenTwoNodes(userName1, userName2);
+		if(relationshipProperties.equals("")){
+			System.out.println("两者之间不存在朋友关系");
+		}else{
+			System.out.println(relationshipProperties);
+		}
+		return relationshipProperties;
+	}
 	/**
 	 * 
 	* @Description: 建立朋友关系，（严格意义上说，应该是用户1对用户2的关注关系）

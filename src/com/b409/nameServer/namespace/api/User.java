@@ -36,8 +36,11 @@ public class User {
 		//用户不存在
 		String propsString =  "{\"name\": \"" + userName +
 				"\", \"displayName\": \"" + userName + 
-				"\", \"acl\": \"" + "public" +
-				"\", \"createTime\": \"" + timeString + "\"}";
+				"\", \"acl\": \"" + "Tips:你可以根据需求设定" +
+				"\", \"createTime\": \"" + timeString +
+				"\", \"other\": \"" + "其他属性"+
+
+				"\"}";
 		namespace.createNodeWithProperties("User", propsString);
 		System.out.println("创建用户"+userName+"成功");
 		return 0;
@@ -168,4 +171,74 @@ public class User {
 		return 0;
 	}
 	//------------------------------------------------------------------------------------------------------------------------
+
+
+	/**
+	 * 
+	* @Description: 查询用户属性
+	* @param userName
+	* @return：
+	* @return：
+	 */
+	public static String queryUserProperty(String userName){
+		//判断参数
+		if(userName.equals("")){
+			System.out.println("用户名为空");
+			return "";
+		}
+		//判断用户是否存在
+		int userId = namespace.getNodeWithLabelAndProperty("User", "name", userName);
+		//用户不存在
+		if(userId == -1){
+			System.out.println("该用户不存在！");
+			return "";
+		}
+		//用户存在
+		String userPropertieString = namespace.getPropertiesOfNode(userId);
+		System.out.println(userPropertieString);
+		return userPropertieString;
+	}
+	
+
+
+	/**
+	 * 
+	* @Description: 更新用户属性
+	* @param userName
+	* @param props
+	* @return：
+	* @return：
+	 */
+	public static String updateUserProperty(String userName,String props){
+		//判断参数
+		if(userName.equals("")){
+			System.out.println("删除用户失败：用户名为空");
+			return "";
+		}
+		//判断用户是否存在
+		int userId = namespace.getNodeWithLabelAndProperty("User", "name", userName);
+		//用户不存在
+		if(userId == -1){
+			System.out.println("删除用户"+userName+"失败：该用户本来就不存在！");
+			return "";
+		}
+		//用户存在
+		String timeString = CommonTool.getTime();
+		String propsString="";
+		if(props.equals("")){
+			propsString = "{\"name\": \"" + userName +
+					"\", \"displayName\": \"" + userName +
+					"\", \"createTime\": \"" + timeString +
+					"\", \"acl\": \"" + "Tips:你可以根据需求设定" +
+					"\", \"other\": \"" + "测试更新属性"+
+					"\"}";
+			
+		}else{
+			propsString = props;
+		}
+		namespace.setAllPropertiesOnNode(userId, propsString);
+		return "success";
+	}
+
+
 }

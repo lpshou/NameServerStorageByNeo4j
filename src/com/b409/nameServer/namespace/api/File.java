@@ -92,7 +92,8 @@ public class File {
 		//parentName存在
 		//parentName下是否已经存在fileName
 		//fileName的name为parentName+""+fileName;
-		String name= parentName+"_"+fileName;
+//		String name= parentName+"_"+fileName;
+		String name= fileName;
 		int nodeId = namespace.getNodeWithLabelAndProperty("File", "name", name);
 		
 		//parentName下面已经存在名为fileName的文件
@@ -104,13 +105,17 @@ public class File {
 		//parentName下面不存在名为fileName的文件
 		String propsString = "{\"name\": \""+name +
 				"\",\"displayName\": \"" + fileName +
-				"\", \"acl\": \"" + "public" +
+				"\", \"acl\": \"" + "Tips:你可以根据需求设定" +
 				"\",\"createTime\": \"" + timeString +
-				"\", \"fileLocation\" :\"" + fileLocation+"\"}";
+				"\", \"fileLocation\" :\"" + fileLocation+
+				"\", \"other\": \"" + "其他属性"+
+
+				"\"}";
 		//创建名为fileName的文件
 		int fileId = namespace.createNodeWithProperties("File", propsString);
 		//在parentName和fileName之间建立关系
 		String timeProps = "{\"createTime\": \""+timeString+"\"}";
+//		System.out.println("userid:"+parentId+", fileId:"+fileId);
 		relationship.createRelationshipBetweenTwoNode(parentId, fileId, "contains", timeProps);
 		System.out.println("创建文件成功！");
 		return 0;
@@ -146,7 +151,8 @@ public class File {
 		//parentName存在
 		//parentName下是否存在名为fileName的文件
 		//其name属性为：
-		String name = parentName + "_" + fileName;
+//		String name = parentName + "_" + fileName;
+		String name = fileName;
 		int nodeId = namespace.getNodeWithLabelAndProperty("File", "name", name);
 		
 		//parentName下面存在名为directoryName的文件夹
@@ -165,6 +171,76 @@ public class File {
 		}
 
 	}
+	
+
+
+	/**
+	 * 
+	* @Description:查询文件属性 
+	* @param fileName
+	* @return：
+	* @return：
+	 */
+	public static String queryFileProperty(String fileName){
+		//判断参数
+		if(fileName.equals("")){
+			System.out.println("用户名为空");
+			return "";
+		}
+		//判断文件是否存在
+		int fileId = namespace.getNodeWithLabelAndProperty("File", "name", fileName);
+		//文件不存在
+		if(fileId == -1){
+			System.out.println("该文件不存在！");
+			return "";
+		}
+		//文件存在
+		String filePropertiesString = namespace.getPropertiesOfNode(fileId);
+		System.out.println(filePropertiesString);
+		return filePropertiesString;
+	}
+	
+
+
+	/**
+	 * 
+	* @Description:更新文件属性 
+	* @param FileName
+	* @param props
+	* @return：
+	* @return：
+	 */
+	public static String updateFileProperty(String FileName,String props){
+		//判断参数
+		if(FileName.equals("")){
+			System.out.println("参数为空");
+			return "";
+		}
+		//判断文件是否存在
+		int fileId = namespace.getNodeWithLabelAndProperty("File", "name", FileName);
+		//用户不存在
+		if(fileId == -1){
+			System.out.println("文件就不存在！");
+			return "";
+		}
+		//用户存在
+		String timeString = CommonTool.getTime();
+		String propsString="";
+		if(props.equals("")){
+			propsString = "{\"name\": \"" + FileName +
+					"\", \"displayName\": \"" + FileName +
+					"\", \"createTime\": \"" + timeString +
+					"\", \"acl\": \"" + "Tips:你可以根据需求设定" +
+					"\", \"other\": \"" + "测试更新属性"+
+					"\"}";
+			
+		}else{
+			propsString = props;
+		}
+		namespace.setAllPropertiesOnNode(fileId, propsString);
+		return "success";
+	}
+
 	
 	/**
 	 * 

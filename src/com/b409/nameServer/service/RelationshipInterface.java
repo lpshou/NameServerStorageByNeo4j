@@ -50,10 +50,20 @@ public interface RelationshipInterface {
 	 */
 	public List<String> getAllRelationships();
 	
+	/**
+	 * 
+	* @Description: 得到两个节点之间的关系
+	* @param nodeName1
+	* @param nodeName2
+	* @return：
+	* @return：
+	 */
+	public String getRelationshipBetweenTwoNodes(String nodeName1, String nodeName2);
+	
 
 	/**
 	 * 
-	* @Description: 得到两个节点之间的关系，参数为节点的name值
+	* @Description: 得到两个节点之间的关系类型，参数为节点的name值
 	* @param nodeName1：第一个节点的name
 	* @param nodeName2：第二个节点的name
 	* @return：

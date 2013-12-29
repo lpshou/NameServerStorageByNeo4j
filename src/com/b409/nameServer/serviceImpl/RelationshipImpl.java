@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -144,7 +145,25 @@ public class RelationshipImpl implements RelationshipInterface, Config {
 	
 	/**
 	 * 
-	* @Description: 得到两个节点之间的关系，参数为节点的name值
+	* @Description: 得到两个节点之间的关系
+	* @param nodeName1
+	* @param nodeName2
+	* @return：
+	* @return：
+	 */
+	public String getRelationshipBetweenTwoNodes(String nodeName1, String nodeName2){
+		final String cypherUri = SERVER_ROOT_URI + "cypher";
+		String cypherString = "start n=node(*) where n.name={name1} match n-[r]-friend where friend.name={name2} return r";
+		String cypherJson = GenerateJson.generateJsonCypherForgetRelationshipTypeBetweenTwoNode(cypherString,
+				nodeName1, nodeName2);
+
+		String dataResult = JerseyClient.sendToServer(cypherUri, cypherJson, "post");
+		return dataResult;
+	}
+	
+	/**
+	 * 
+	* @Description: 得到两个节点之间的关系类型，参数为节点的name值
 	* @param nodeName1：第一个节点的name
 	* @param nodeName2：第二个节点的name
 	* @return：
